@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { signUp } from "../data/users";
+import { useSignUp } from "../hooks/useSignUp";
 
 function SignUp() {
   const {
@@ -8,28 +10,45 @@ function SignUp() {
     formState: { errors },
   } = useForm();
 
-  function onSubmit(data) {}
+  const { signUp, isLoading } = useSignUp();
+
+  function onSubmit(data) {
+    signUp(data);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
         placeholder="email"
-        {...register("email", { required: true })}
+        disabled={isLoading}
+        {...register("email", {
+          required: "this field is required",
+          pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: "Please provide a valide email",
+          },
+        })}
         className=" border-red-900  border"
       />
 
       <input
         type="password"
         placeholder="password"
-        {...register("password", { required: true })}
+        disabled={isLoading}
+        {...register("password", { required: "this field is required" })}
         className=" border-red-900  border"
       />
 
       <input
         type="password"
         placeholder="confirm password"
-        {...register("re-password", { required: true })}
+        disabled={isLoading}
+        {...register("re-password", {
+          required: "this field is required",
+          validate: (value) =>
+            value === getValues().password || "password do not match",
+        })}
         className=" border-red-900  border"
       />
       <button type="submit"></button>

@@ -7,7 +7,7 @@ export async function getNotes() {
   const { data, error } = await supabase
     .from("notes")
     .select("*")
-    .eq("note_id", user.id);
+    .eq("user_id", user.id);
 
   if (error) {
     console.error(error);

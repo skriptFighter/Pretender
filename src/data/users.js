@@ -10,6 +10,23 @@ export async function login({ email, password }) {
   return data;
 }
 
+export async function signUp({ email, password }) {
+  const { data: authUser, error: authError } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (authError) throw new Error(authError);
+
+  const { data, error } = await supabase
+    .from("users")
+    .insert([{ user_id: authUser.user.id }])
+    .select();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
 export async function getCurrentUser() {
   const {
     data: { user },
