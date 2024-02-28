@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { login } from "../data/users";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
+import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router";
 
 function Login() {
   const {
@@ -10,33 +10,29 @@ function Login() {
     formState: { errors },
   } = useForm();
 
+  const { login, isLoading: isLogin } = useLogin();
+  const { isAuthenticated, isLoading: isUser } = useUser();
   const navigate = useNavigate();
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: login,
-    onSuccess: (user) => {
-      navigate("/");
-    },
-    onError: (err) => {
-      console.log("error");
-    },
-  });
+  if (isUser) return <p>loading...</p>;
+  if (isAuthenticated) navigate("/");
 
   function onSubmit(data) {
-    mutate(data);
+    login(data);
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
-        defaultValue="email"
+        defaultValue="adelboudjema099@gmail.com"
         {...register("email", { required: true })}
         className=" border-red-900  border"
       />
 
       <input
         type="password"
+        defaultValue={"b46b6b84b82b14b7"}
         {...register("password", { required: true })}
         className=" border-red-900  border"
       />

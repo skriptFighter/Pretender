@@ -1,6 +1,6 @@
 import Note from "../ui/Note";
 
-function Home() {
+function Dashboard() {
   return (
     <div>
       <p>home</p>
@@ -9,4 +9,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;
