@@ -1,12 +1,8 @@
 import supabase from "./supabase";
+import { getCurrentUser } from "./users";
 
 export async function getNotes() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error("User is not authenticated");
-  }
+  const user = await getCurrentUser();
 
   const { data, error } = await supabase
     .from("notes")
