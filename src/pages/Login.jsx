@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLogin } from "../hooks/useLogin";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 function Login() {
   const {
@@ -15,7 +16,12 @@ function Login() {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  if (isAuthenticated) navigate("/");
+  useEffect(
+    function () {
+      if (isAuthenticated) navigate("/");
+    },
+    [isAuthenticated, navigate]
+  );
 
   function onSubmit(data) {
     login(data);
@@ -38,7 +44,7 @@ function Login() {
         className=" border-red-900  border"
       />
 
-      <button type="submit">sub</button>
+      <button type="submit">login</button>
     </form>
   );
 }

@@ -3,6 +3,7 @@ import { useSignUp } from "../hooks/useSignUp";
 
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function SignUp() {
   const { signUp, isLoading, isSignedUp } = useSignUp();
@@ -17,7 +18,12 @@ function SignUp() {
     formState: { errors },
   } = useForm();
 
-  if (isAuthenticated) navigate("/");
+  useEffect(
+    function () {
+      if (isAuthenticated) navigate("/");
+    },
+    [isAuthenticated, navigate]
+  );
 
   function onSubmit(data) {
     signUp(data);
@@ -67,13 +73,13 @@ function SignUp() {
         {...register("rePassword", {
           required: true,
           validate: (value) =>
-            value === getValues().password || "password do not match",
+            value === getValues().password || "passwords do not match",
         })}
         className=" border-red-900  border"
       />
       {errors?.rePassword?.message && <p>{errors.rePassword.message}</p>}
 
-      <button type="submit"></button>
+      <button type="submit">sign up</button>
     </form>
   );
 }
