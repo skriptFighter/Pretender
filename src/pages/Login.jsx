@@ -1,49 +1,57 @@
-import { useForm } from "react-hook-form";
-import { login } from "../data/users";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form"
+import { useLogin } from "../hooks/useLogin"
+import { useUser } from "../hooks/useUser"
+import { useNavigate } from "react-router"
+import { useEffect } from "react"
 
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+ const {
+  register,
+  handleSubmit,
+  reset,
+  formState: { errors },
+ } = useForm()
 
-  const navigate = useNavigate();
+ //  isLoading: isLogin
+ const { login } = useLogin()
+ const { isAuthenticated } = useUser()
+ const navigate = useNavigate()
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: login,
-    onSuccess: (user) => {
-      navigate("/");
-    },
-    onError: (err) => {
-      console.log("error");
-    },
-  });
+ useEffect(
+  function () {
+   if (isAuthenticated) navigate("/")
+  },
+  [isAuthenticated, navigate]
+ )
 
-  function onSubmit(data) {
-    mutate(data);
-  }
+ function onSubmit(data) {
+  login(data)
+  reset()
+ }
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        type="text"
-        defaultValue="email"
-        {...register("email", { required: true })}
-        className=" border-red-900  border"
-      />
+ return (
+  <form onSubmit={handleSubmit(onSubmit)}>
+   <input
+    id="email"
+    type="text"
+    defaultValue="adelboudjema099@gmail.com"
+    {...register("email", { required: true })}
+    className=" border-red-900  border"
+   />
+   {errors?.password?.message && <p>{errors.password.message}</p>}
 
-      <input
-        type="password"
-        {...register("password", { required: true })}
-        className=" border-red-900  border"
-      />
+   <input
+    id="password"
+    type="password"
+    defaultValue={"b46b6b84b82b14b7"}
+    {...register("password", { required: true })}
+    className=" border-red-900  border"
+   />
+   {errors?.password?.message && <p>{errors.password.message}</p>}
 
-      <button type="submit">sub</button>
-    </form>
-  );
+   <button type="submit">login</button>
+  </form>
+ )
 }
 
-export default Login;
+export default Login

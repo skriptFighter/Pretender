@@ -1,22 +1,15 @@
-import supabase from "./supabase";
+import supabase from "./supabase"
+import { getCurrentUser } from "./users"
 
 export async function getNotes() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error("User is not authenticated");
-  }
+ const user = await getCurrentUser()
 
-  const { data, error } = await supabase
-    .from("notes")
-    .select("*")
-    .eq("note_id", user.id);
+ const { data, error } = await supabase
+  .from("notes")
+  .select("*")
+  .eq("user_id", user.id)
 
-  if (error) {
-    console.error(error);
-    throw new Error("Failed to fetch user notes");
-  }
+ if (error) throw new Error(error.message)
 
-  return data || [];
+ return data
 }
