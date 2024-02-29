@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
+import Toast from "./ui/Toast";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -47,6 +48,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider router={router} />
+      <Toast />
     </QueryClientProvider>
   );
 }

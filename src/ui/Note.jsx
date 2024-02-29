@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import { getNotes } from "../data/notes";
 import { useNotes } from "../hooks/useNotes";
 
 function Note() {
@@ -10,8 +8,8 @@ function Note() {
 
   return (
     <div>
-      {notes.map((note) => (
-        <p key={note.id}>{note.title}</p>
+      {notes?.map((note) => (
+        <p key={note?.id}>{note?.title}</p>
       ))}
     </div>
   );

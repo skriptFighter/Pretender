@@ -7,6 +7,7 @@ function Login() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -18,6 +19,7 @@ function Login() {
 
   function onSubmit(data) {
     login(data);
+    reset();
   }
 
   return (

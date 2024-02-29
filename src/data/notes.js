@@ -9,9 +9,7 @@ export async function getNotes() {
     .select("*")
     .eq("user_id", user.id);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
-  return data || [];
+  return data;
 }

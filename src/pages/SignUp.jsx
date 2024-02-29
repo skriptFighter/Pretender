@@ -13,6 +13,7 @@ function SignUp() {
     handleSubmit,
     register,
     getValues,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -20,6 +21,7 @@ function SignUp() {
 
   function onSubmit(data) {
     signUp(data);
+    reset();
   }
 
   if (isSignedUp)
@@ -33,6 +35,7 @@ function SignUp() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
+        id="email"
         placeholder="email"
         disabled={isLoading}
         {...register("email", {
@@ -44,26 +47,32 @@ function SignUp() {
         })}
         className=" border-red-900  border"
       />
+      {errors?.email?.message && <p>{errors.email.message}</p>}
 
       <input
         type="password"
+        id="password"
         placeholder="password"
         disabled={isLoading}
         {...register("password", { required: "this field is required" })}
         className=" border-red-900  border"
       />
+      {errors?.password?.message && <p>{errors.password.message}</p>}
 
       <input
         type="password"
+        id="rePassword"
         placeholder="confirm password"
         disabled={isLoading}
-        {...register("re-password", {
-          required: "this field is required",
+        {...register("rePassword", {
+          required: true,
           validate: (value) =>
             value === getValues().password || "password do not match",
         })}
         className=" border-red-900  border"
       />
+      {errors?.rePassword?.message && <p>{errors.rePassword.message}</p>}
+
       <button type="submit"></button>
     </form>
   );

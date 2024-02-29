@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signUp as signUpApi } from "../data/users";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export function useSignUp() {
   const [isSignedUp, setIsSignedUp] = useState(false);
@@ -8,11 +9,11 @@ export function useSignUp() {
   const { mutate: signUp, isLoading } = useMutation({
     mutationFn: signUpApi,
     onSuccess: (user) => {
-      console.log("Account successfully created");
+      toast.success("Account successfully created");
       setIsSignedUp(true);
     },
     onError: (err) => {
-      console.log(err.message);
+      toast.error(err.message);
     },
   });
 
