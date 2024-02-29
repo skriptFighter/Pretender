@@ -11,10 +11,9 @@ function Login() {
   } = useForm();
 
   const { login, isLoading: isLogin } = useLogin();
-  const { isAuthenticated, isLoading: isUser } = useUser();
+  const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  if (isUser) return <p>loading...</p>;
   if (isAuthenticated) navigate("/");
 
   function onSubmit(data) {

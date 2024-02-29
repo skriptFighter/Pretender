@@ -15,15 +15,19 @@ export async function signUp({ email, password }) {
     email,
     password,
   });
-
   if (authError) throw new Error(authError);
+
+  const { error: otpError } = await supabase.auth.signInWithOtp({
+    email: authUser.user.email,
+  });
+  if (otpError) throw new Error(otpError.message);
 
   const { data, error } = await supabase
     .from("users")
     .insert([{ user_id: authUser.user.id }])
     .select();
-
   if (error) throw new Error(error.message);
+
   return data;
 }
 

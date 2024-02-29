@@ -1,8 +1,14 @@
 import { useForm } from "react-hook-form";
-import { signUp } from "../data/users";
 import { useSignUp } from "../hooks/useSignUp";
+import { useState } from "react";
+import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const { signUp, isLoading, isSignedUp } = useSignUp();
+  const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -10,11 +16,18 @@ function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const { signUp, isLoading } = useSignUp();
+  if (isAuthenticated) navigate("/");
 
   function onSubmit(data) {
     signUp(data);
   }
+
+  if (isSignedUp)
+    return (
+      <div>
+        <p>confirm email please</p>
+      </div>
+    );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -26,7 +39,7 @@ function SignUp() {
           required: "this field is required",
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "Please provide a valide email",
+            message: "Please provide a valid email",
           },
         })}
         className=" border-red-900  border"
