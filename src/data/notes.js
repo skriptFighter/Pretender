@@ -1,15 +1,15 @@
-import supabase from "./supabase";
-import { getCurrentUser } from "./users";
+import supabase from "./supabase"
+import { getCurrentUser } from "./users"
 
 export async function getNotes() {
-  const user = await getCurrentUser();
+ const user = await getCurrentUser()
 
-  const { data, error } = await supabase
-    .from("notes")
-    .select("*")
-    .eq("user_id", user.id);
+ const { data, error } = await supabase
+  .from("notes")
+  .select("*")
+  .eq("user_id", user.id)
 
-  if (error) throw new Error(error.message);
+ if (error) throw new Error(error.message)
 
-  return data;
+ return data
 }
