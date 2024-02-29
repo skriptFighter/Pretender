@@ -10,8 +10,7 @@ export async function getNotes() {
     .eq("user_id", user.id);
 
   if (error) {
-    console.error(error);
-    throw new Error("Failed to fetch user notes");
+    throw new Error(error.message);
   }
 
   return data || [];
