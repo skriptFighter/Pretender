@@ -42,10 +42,10 @@ function Form({ loginForm }) {
   <>
    <form
     onSubmit={handleSubmit(onSubmit)}
-    className="flex flex-col gap-8 w-1/4 bg-slate-50 px-2 p-4 rounded"
+    className="flex flex-col gap-8 sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 bg-gray-100 px-4 py-4 rounded-lg"
    >
     <div>
-     <h1 className="text-3xl font-bold text-center">
+     <h1 className="text-lg sm:text-lg md:text-xl lg:text-2xl font-bold text-center">
       {loginForm ? "Login" : "Create an account"}
      </h1>
     </div>
@@ -105,7 +105,7 @@ function Form({ loginForm }) {
      )}
     </div>
 
-    <p className="text-center">
+    <p className="text-center text-sm sm:text-md">
      {loginForm ? "Don't have an account? " : "Already have an account? "}
      <Link
       to={loginForm ? "/signup" : "/login"}
