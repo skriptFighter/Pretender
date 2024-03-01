@@ -14,6 +14,8 @@ import ProtectedRoute from "./ui/ProtectedRoute"
 import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
 import Toast from "./ui/Toast"
+import AuthLayout from "./ui/AuthLayout"
+import Dark from "./ui/Dark"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -30,8 +32,10 @@ export default function App() {
      <Route index element={<Dashboard />} />
     </Route>
 
-    <Route path="login" element={<Login />} />
-    <Route path="signup" element={<SignUp />} />
+    <Route element={<AuthLayout />}>
+     <Route path="login" element={<Login />} />
+     <Route path="signup" element={<SignUp />} />
+    </Route>
    </>
   )
  )
@@ -49,6 +53,7 @@ export default function App() {
    <ReactQueryDevtools initialIsOpen={false} />
    <RouterProvider router={router} />
    <Toast />
+   <Dark />
   </QueryClientProvider>
  )
 }
