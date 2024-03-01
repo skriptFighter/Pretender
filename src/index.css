@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+ * {
+  @apply box-border m-0 p-0;
+ }
+ body {
+  @apply dark:bg-black dark:text-slate-200;
+ }
+}

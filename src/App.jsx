@@ -15,6 +15,7 @@ import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
 import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
+import Dark from "./ui/Dark"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -52,6 +53,7 @@ export default function App() {
    <ReactQueryDevtools initialIsOpen={false} />
    <RouterProvider router={router} />
    <Toast />
+   <Dark />
   </QueryClientProvider>
  )
 }

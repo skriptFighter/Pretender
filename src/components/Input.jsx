@@ -13,10 +13,10 @@ function Input({ htmlForId, placeholder, label, type, register, error }) {
     id={htmlForId}
     placeholder={placeholder}
     {...register}
-    className="text-sm sm:text-md bg-gray-50 text-gray-700 border-gray-300 focus:outline-none focus:ring focus:border-gray-700 rounded py-1 px-2"
+    className="text-sm sm:text-md bg-white dark:bg-zinc-900  dark:text-stone-300 text-black border-gray-300 focus:outline-none focus:ring focus:border-gray-900 rounded p-2"
    />
 
-   <p className="text-sm sm:text-md  text-red-400 font-semibold">
+   <p className="text-sm sm:text-md  text-red-400 dark:text-red-500 font-semibold">
     {error && error}
    </p>
   </div>
