@@ -1,7 +1,7 @@
 import Form from "../ui/Form"
 
 function SignUp() {
- return <Form purpose={"signup"} />
+ return <Form loginForm={false} />
 }
 
 export default SignUp
