@@ -6,6 +6,7 @@ import Button from "../components/Button"
 
 import { useLogout } from "../hooks/useLogout"
 import SearchBar from "../components/SearchBar"
+import { Link } from "react-router-dom"
 
 function Header() {
  const { logout } = useLogout()
@@ -19,11 +20,9 @@ function Header() {
    <SearchBar />
 
    <div className="flex items-center gap-4">
-    <img
-     src="https://i.pravatar.cc/200"
-     alt=""
-     className="w-10 h-10 rounded-full"
-    />
+    <Link to={"/profile"}>
+     <img src="https://i.pravatar.cc/200" className="w-10 h-10 rounded-full" />
+    </Link>
 
     <p>John Doe</p>
 
