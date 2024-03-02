@@ -42,7 +42,7 @@ function Form({ loginForm }) {
   <>
    <form
     onSubmit={handleSubmit(onSubmit)}
-    className="flex flex-col gap-8 sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 bg-neutral-200 dark:bg-zinc-950 px-4 py-4 rounded-lg"
+    className="flex flex-col gap-8 sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 bg-neutral-200 dark:bg-zinc-950 px-4 py-8 rounded-lg"
    >
     <div>
      <h1 className="text-lg sm:text-lg md:text-xl lg:text-2xl font-bold text-center">

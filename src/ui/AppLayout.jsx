@@ -1,14 +1,16 @@
 import { Outlet } from "react-router-dom"
 import Header from "./Header"
+import Sidebar from "./Sidebar"
 
 function AppLayout() {
  return (
-  <div className="h-screen max-w-screen-2xl mx-auto py-5">
+  <div className="h-screen mx-auto">
    <Header />
 
    <div className="mb-10" />
 
-   <main>
+   <main className="flex gap-10">
+    <Sidebar />
     <Outlet />
    </main>
   </div>
