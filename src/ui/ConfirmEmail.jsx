@@ -7,7 +7,7 @@ function ConfirmEmail() {
   <div className="flex flex-col gap-4">
    <h1 className="text-4xl">Please confirm your email</h1>
    <Link to={"https://www.gmail.com"} target="_blank">
-    <Button>Confirm</Button>
+    <Button primary={true}>Confirm</Button>
    </Link>
   </div>
  )

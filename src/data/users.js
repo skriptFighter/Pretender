@@ -1,4 +1,4 @@
-import supabase from "./supabase"
+import supabase, { supabaseUrl } from "./supabase"
 
 export async function login({ email, password }) {
  const { data, error } = await supabase.auth.signInWithPassword({
@@ -29,7 +29,7 @@ export async function signUp({ email, password }) {
 
  const { data, error } = await supabase
   .from("users")
-  .insert([{ user_id: authUser.user.id }])
+  .insert([{ auth_id: authUser.user.id }])
   .select()
  if (error) throw new Error(error.message)
 
@@ -45,4 +45,30 @@ export async function getCurrentUser() {
   throw new Error("User is not authenticated")
  }
  return user
+}
+
+export async function editProfile({ user, id }) {
+ console.log(user)
+ const hasImagePath = user.image?.startsWith?.(supabaseUrl)
+ const imageName = `${Math.random()}-${user.avatar.name}`.replaceAll("/", "")
+ const imagePath = hasImagePath
+  ? user.avatar
+  : `${supabaseUrl}/storage/v1/object/public/avatars/${imageName}`
+
+ let query = supabase.from("users")
+
+ if (id) query = query.update({ ...user, avatar: imagePath }).eq("auth_id", id)
+
+ const { data, error } = await query.select().single()
+
+ if (error) {
+  console.error(error)
+  throw new Error("user could not be created")
+ }
+
+ if (hasImagePath) return data
+
+ await supabase.storage.from("avatars").upload(imageName, user.avatar)
+
+ return data
 }

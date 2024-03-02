@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard"
 import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
+import Profile from "./pages/Profile"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -31,6 +32,8 @@ export default function App() {
     >
      <Route index element={<Dashboard />} />
     </Route>
+
+    <Route path="profile" element={<Profile />} />
 
     <Route element={<AuthLayout />}>
      <Route path="login" element={<Login />} />
