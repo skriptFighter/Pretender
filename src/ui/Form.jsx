@@ -82,12 +82,12 @@ function Form({ loginForm }) {
      {!loginForm && (
       <Input
        type={"password"}
-       htmlForId={"repassword"}
+       htmlForId={"rePassword"}
        label={"Confirm password"}
        placeholder={"Confirm your password"}
-       error={errors?.repassword?.message}
+       error={errors?.rePassword?.message}
        register={{
-        ...register("repassword", {
+        ...register("rePassword", {
          required: "This field is required",
          validate: (value) =>
           value === getValues().password || "Passwords need to match",

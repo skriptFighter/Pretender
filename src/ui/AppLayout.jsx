@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar"
 
 function AppLayout() {
  return (
-  <div className="h-screen mx-auto">
+  <div className="mx-auto overflow-x-hidden">
    <Header />
 
    <div className="mb-10" />
