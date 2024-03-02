@@ -6,11 +6,7 @@ import toast from "react-hot-toast"
 import { editProfile as editProfileApi } from "../data/users"
 
 function Profile() {
- const {
-  register,
-  handleSubmit,
-  formState: { errors },
- } = useForm()
+ const { register, handleSubmit } = useForm()
 
  const { user } = useUser()
 
