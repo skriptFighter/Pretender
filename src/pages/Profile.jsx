@@ -10,15 +10,6 @@ function Profile() {
  const { user: authUser } = useAuthUser()
  const { editProfile } = useEditProfile()
  const { user } = useUserInfos()
- //  const navigate = useNavigate()
-
- //bug
- //  useEffect(
- //   function () {
- //    if (!isAuthenticated) navigate("/login")
- //   },
- //   [isAuthenticated, navigate]
- //  )
 
  function onSubmit(data) {
   const image = data?.image && data.image.length > 0 ? data.image[0] : null

@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form"
 import { useLogin } from "../hooks/useLogin"
-import { useAuthUser } from "../hooks/useAuthUser"
-import { useNavigate } from "react-router"
-import { useEffect } from "react"
 import Input from "../components/Input"
 import Button from "../components/Button"
 import { Link } from "react-router-dom"
@@ -16,15 +13,6 @@ function Login() {
  } = useForm()
 
  const { login } = useLogin()
- const { isAuthenticated } = useAuthUser()
- const navigate = useNavigate()
-
- useEffect(
-  function () {
-   if (isAuthenticated) navigate("/")
-  },
-  [isAuthenticated, navigate]
- )
 
  function onSubmit(data) {
   login(data)
