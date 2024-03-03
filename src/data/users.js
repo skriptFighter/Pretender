@@ -15,7 +15,7 @@ export async function logout() {
  if (error) throw new Error(error.message)
 }
 
-export async function signUp({ email, password }) {
+export async function signUp({ email, password, username }) {
  const { data: authUser, error: authError } = await supabase.auth.signUp({
   email,
   password,
@@ -29,14 +29,14 @@ export async function signUp({ email, password }) {
 
  const { data, error } = await supabase
   .from("users")
-  .insert([{ auth_id: authUser.user.id }])
+  .insert([{ username, email, auth_id: authUser.user.id }])
   .select()
  if (error) throw new Error(error.message)
 
  return data
 }
 
-export async function getCurrentUser() {
+export async function getAuthUser() {
  const {
   data: { user },
  } = await supabase.auth.getUser()
@@ -47,8 +47,20 @@ export async function getCurrentUser() {
  return user
 }
 
+export async function getUserInfos() {
+ const authUser = await getAuthUser()
+
+ let { data: users, error } = await supabase
+  .from("users")
+  .select("username,email,avatar")
+  .eq("auth_id", authUser.id)
+
+ if (error) throw new Error("could not load user infos ")
+
+ return users
+}
+
 export async function editProfile({ user, id }) {
- console.log(user)
  const hasImagePath = user.image?.startsWith?.(supabaseUrl)
  const imageName = `${Math.random()}-${user.avatar.name}`.replaceAll("/", "")
  const imagePath = hasImagePath

@@ -13,9 +13,12 @@ function Sidebar() {
  )
 }
 
-function Item({ icon, label }) {
+function Item({ icon, label, to }) {
  return (
-  <Link className="flex gap-4 items-center hover:bg-zinc-200 dark:hover:bg-zinc-700 px-6 py-5  rounded-r-full">
+  <Link
+   to={to}
+   className="flex gap-4 items-center hover:bg-zinc-200 dark:hover:bg-zinc-700 px-6 py-5  rounded-r-full"
+  >
    {icon}
    <p>{label}</p>
   </Link>

@@ -1,8 +1,8 @@
 import supabase from "./supabase"
-import { getCurrentUser } from "./users"
+import { getAuthUser } from "./users"
 
 export async function getNotes() {
- const user = await getCurrentUser()
+ const user = await getAuthUser()
 
  const { data, error } = await supabase
   .from("notes")

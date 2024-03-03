@@ -1,22 +1,21 @@
 import { useForm } from "react-hook-form"
 import Input from "../components/Input"
-import { useUser } from "../hooks/useUser"
+import { useAuthUser } from "../hooks/useAuthUser"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 import { editProfile as editProfileApi } from "../data/users"
 
 function Profile() {
+ //todo pass userInfos from header instead of getUserInfos every time
  const { register, handleSubmit } = useForm()
-
- const { user } = useUser()
-
+ const { user } = useAuthUser()
  const queryClient = useQueryClient()
 
  const { mutate: editProfile } = useMutation({
   mutationFn: editProfileApi,
   onSuccess: () => {
-   toast.success("User successfully edited")
-   queryClient.invalidateQueries({ queryKey: ["user"] })
+   toast.success("Infos successfully edited")
+   queryClient.invalidateQueries({ queryKey: ["userInfos"] })
   },
   onError: (err) => toast.error(err.message),
  })
@@ -42,6 +41,7 @@ function Profile() {
       ...register("avatar"),
      }}
     />
+
     <button type="submit">submit</button>
    </form>
   </div>
