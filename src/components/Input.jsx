@@ -1,4 +1,12 @@
-function Input({ htmlForId, placeholder, label, type, register, error }) {
+function Input({
+ htmlForId,
+ placeholder,
+ label,
+ type,
+ register,
+ error,
+ defaultValue,
+}) {
  return (
   <div className="flex flex-col gap-2 px-2 w-full">
    <label
@@ -11,6 +19,7 @@ function Input({ htmlForId, placeholder, label, type, register, error }) {
    <input
     type={type}
     id={htmlForId}
+    defaultValue={defaultValue}
     placeholder={placeholder}
     {...register}
     className="text-sm sm:text-md bg-white dark:bg-zinc-900  dark:text-stone-300 text-black border-gray-300 focus:outline-none focus:ring focus:border-gray-900 rounded p-2"

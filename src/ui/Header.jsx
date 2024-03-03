@@ -12,7 +12,7 @@ import { useUserInfos } from "../hooks/useUserInfos"
 function Header() {
  const { logout } = useLogout()
  const { user } = useUserInfos()
- const { username, avatar } = user?.[0] || {}
+ const { username, image } = user?.[0] || {}
 
  return (
   <div className="flex justify-between items-center p-5">
@@ -21,7 +21,7 @@ function Header() {
 
    <div className="flex items-center gap-4">
     <Link to={"/profile"}>
-     <img src={avatar} className="w-10 h-10 rounded-full" />
+     <img src={image} className="w-10 h-10 rounded-full" />
     </Link>
 
     <p>{username}</p>

@@ -1,32 +1,31 @@
 import { useForm } from "react-hook-form"
 import Input from "../components/Input"
 import { useAuthUser } from "../hooks/useAuthUser"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import toast from "react-hot-toast"
-import { editProfile as editProfileApi } from "../data/users"
+import { useEditProfile } from "../hooks/useEditProfile"
+import { useUserInfos } from "../hooks/useUserInfos"
 
 function Profile() {
  //todo pass userInfos from header instead of getUserInfos every time
  const { register, handleSubmit } = useForm()
- const { user } = useAuthUser()
- const queryClient = useQueryClient()
+ const { user: authUser } = useAuthUser()
+ const { editProfile } = useEditProfile()
+ const { user } = useUserInfos()
+ //  const navigate = useNavigate()
 
- const { mutate: editProfile } = useMutation({
-  mutationFn: editProfileApi,
-  onSuccess: () => {
-   toast.success("Infos successfully edited")
-   queryClient.invalidateQueries({ queryKey: ["userInfos"] })
-  },
-  onError: (err) => toast.error(err.message),
- })
+ //bug
+ //  useEffect(
+ //   function () {
+ //    if (!isAuthenticated) navigate("/login")
+ //   },
+ //   [isAuthenticated, navigate]
+ //  )
 
  function onSubmit(data) {
-  const avatar = data.avatar && data.avatar.length > 0 ? data.avatar[0] : null
-  console.log(data)
+  const image = data?.image && data.image.length > 0 ? data.image[0] : null
 
   editProfile({
-   user: { ...data, avatar },
-   id: user?.id,
+   user: { ...data, image },
+   id: authUser.id,
   })
  }
 
@@ -34,11 +33,31 @@ function Profile() {
   <div>
    <form onSubmit={handleSubmit(onSubmit)}>
     <Input
-     htmlForId={"avatar"}
-     label={"Upload avatar"}
+     htmlForId={"image"}
+     label={"Profile picture"}
      type={"file"}
      register={{
-      ...register("avatar"),
+      ...register("image"),
+     }}
+    />
+
+    <Input
+     htmlForId={"username"}
+     label={"username"}
+     type={"text"}
+     defaultValue={user?.[0]?.username}
+     register={{
+      ...register("username"),
+     }}
+    />
+
+    <Input
+     htmlForId={"email"}
+     label={"Email"}
+     type={"text"}
+     defaultValue={user?.[0]?.email}
+     register={{
+      ...register("email"),
      }}
     />
 

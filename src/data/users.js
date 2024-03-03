@@ -52,7 +52,7 @@ export async function getUserInfos() {
 
  let { data: users, error } = await supabase
   .from("users")
-  .select("username,email,avatar")
+  .select("username,email,image")
   .eq("auth_id", authUser.id)
 
  if (error) throw new Error("could not load user infos ")
@@ -62,14 +62,13 @@ export async function getUserInfos() {
 
 export async function editProfile({ user, id }) {
  const hasImagePath = user.image?.startsWith?.(supabaseUrl)
- const imageName = `${Math.random()}-${user.avatar.name}`.replaceAll("/", "")
+ const imageName = `${Math.random()}-${user.image.name}`.replaceAll("/", "")
  const imagePath = hasImagePath
-  ? user.avatar
+  ? user.image
   : `${supabaseUrl}/storage/v1/object/public/avatars/${imageName}`
 
  let query = supabase.from("users")
-
- if (id) query = query.update({ ...user, avatar: imagePath }).eq("auth_id", id)
+ if (id) query = query.update({ ...user, image: imagePath }).eq("auth_id", id)
 
  const { data, error } = await query.select().single()
 
@@ -80,7 +79,7 @@ export async function editProfile({ user, id }) {
 
  if (hasImagePath) return data
 
- await supabase.storage.from("avatars").upload(imageName, user.avatar)
+ await supabase.storage.from("avatars").upload(imageName, user.image)
 
  return data
 }
