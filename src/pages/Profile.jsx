@@ -3,13 +3,24 @@ import Input from "../components/Input"
 import { useAuthUser } from "../hooks/useAuthUser"
 import { useEditProfile } from "../hooks/useEditProfile"
 import { useUserInfos } from "../hooks/useUserInfos"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Profile() {
- //todo pass userInfos from header instead of getUserInfos every time
- const { register, handleSubmit } = useForm()
- const { user: authUser } = useAuthUser()
  const { editProfile } = useEditProfile()
  const { user } = useUserInfos()
+
+ const { register, handleSubmit } = useForm()
+
+ const { user: authUser, isAuthenticated } = useAuthUser()
+ const navigate = useNavigate()
+
+ useEffect(
+  function () {
+   if (!isAuthenticated) navigate("/login")
+  },
+  [isAuthenticated, navigate]
+ )
 
  function onSubmit(data) {
   const image = data?.image && data.image.length > 0 ? data.image[0] : null
@@ -22,6 +33,7 @@ function Profile() {
 
  return (
   <div>
+   <img src={user?.[0]?.image} />
    <form onSubmit={handleSubmit(onSubmit)}>
     <Input
      htmlForId={"image"}
