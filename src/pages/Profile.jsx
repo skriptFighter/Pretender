@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form"
-import Input from "../components/Input"
 import { useAuthUser } from "../hooks/useAuthUser"
 import { useEditProfile } from "../hooks/useEditProfile"
 import { useUserInfos } from "../hooks/useUserInfos"
@@ -11,11 +10,7 @@ function Profile() {
  const { editProfile } = useEditProfile()
  const { user } = useUserInfos()
 
- const {
-  register,
-  handleSubmit,
-  formState: { errors },
- } = useForm()
+ const { register, handleSubmit } = useForm()
 
  const { user: authUser, isAuthenticated, isLoading } = useAuthUser()
  const navigate = useNavigate()

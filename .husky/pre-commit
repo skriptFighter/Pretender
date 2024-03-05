@@ -1,2 +1,2 @@
-npx prettier --write
+npx prettier . --write
 npm run lint
