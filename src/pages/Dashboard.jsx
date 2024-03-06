@@ -6,15 +6,31 @@ import { MdDeleteOutline } from "react-icons/md"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 import { VscPinned } from "react-icons/vsc"
+import { useSelector } from "react-redux"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
+
+ const { value: searchValue } = useSelector((state) => state.search)
+
+ const filteredNotes = notes?.filter((item) => {
+  const filteredContent = item.content
+   .toLowerCase()
+   .includes(searchValue.toLowerCase())
+
+  const filteredTitle = item.title
+   .toLowerCase()
+   .includes(searchValue.toLowerCase())
+
+  return searchValue === "" ? item : filteredContent || filteredTitle
+ })
+
  if (isLoading) return <p>loading...</p>
  if (error) return <p>error</p>
 
  return (
   <div className="w-full pr-6 grid grid-cols-6 gap-10">
-   {notes?.map((note) => (
+   {filteredNotes.map((note) => (
     <Note title={note.title} content={note.content} key={note.id} />
    ))}
   </div>
