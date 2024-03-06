@@ -60,21 +60,24 @@ export async function getUserInfos() {
  return users
 }
 
-export async function editProfile({ user, id }) {
+export async function editProfile({ user, id, password }) {
  const hasImagePath = user.image?.startsWith?.(supabaseUrl)
  const imageName = `${Math.random()}-${user.image.name}`.replaceAll("/", "")
  const imagePath = hasImagePath
   ? user.image
   : `${supabaseUrl}/storage/v1/object/public/avatars/${imageName}`
 
+ const { error: passwordError } = await supabase.auth.updateUser({
+  password: password,
+ })
+
  let query = supabase.from("users")
  if (id) query = query.update({ ...user, image: imagePath }).eq("auth_id", id)
 
  const { data, error } = await query.select().single()
 
- if (error) {
-  console.error(error)
-  throw new Error("user could not be created")
+ if (error || passwordError) {
+  throw new Error("user could not be edited")
  }
 
  if (hasImagePath) return data
