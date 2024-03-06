@@ -10,7 +10,12 @@ function Profile() {
  const { editProfile } = useEditProfile()
  const { user } = useUserInfos()
 
- const { register, handleSubmit } = useForm()
+ const {
+  register,
+  handleSubmit,
+  formState: { errors },
+  getValues,
+ } = useForm()
 
  const { user: authUser, isAuthenticated, isLoading } = useAuthUser()
  const navigate = useNavigate()
@@ -94,8 +99,16 @@ function Profile() {
         type="password"
         placeholder="Confirm password"
         className="p-2"
-        {...register("rePassword")}
+        {...register("rePassword", {
+         validate: (value) =>
+          value === getValues().newPassword || "Passwords need to match",
+        })}
        />
+       <p
+        className={`text-red-500 opacity-0 ${errors?.rePassword?.message && "opacity-100"}`}
+       >
+        Passwords need to match
+       </p>
       </div>
 
       <Button primary={true} type={"submit"}>
