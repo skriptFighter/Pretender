@@ -31,30 +31,45 @@ function Dashboard() {
 
  const reversedNotes = filteredNotes?.reverse()
 
- const pinnedNotes = reversedNotes?.filter((item) => item?.pinned === true)
- const unpinnedNotes = reversedNotes?.filter((item) => item?.pinned === false)
-
  if (isLoading) return <p>loading...</p>
  if (error) return <p>error</p>
 
  return (
   <div className="flex flex-col gap-8 w-full">
    <AddNote />
+   <PinnedNotesList notes={reversedNotes} />
+   <UnpinnedNotesList notes={reversedNotes} />
+  </div>
+ )
+}
+
+function PinnedNotesList({ notes }) {
+ return (
+  <>
    <p>Pinned</p>
    <div className="w-full pb-6 pr-6 flex flex-wrap gap-x-10 gap-y-2 border-b-2">
-    {pinnedNotes?.map((note) => (
-     <Note
-      title={note?.title}
-      content={note?.content}
-      key={note.id}
-      id={note?.id}
-      pinned={note?.pinned}
-     />
-    ))}
+    {notes
+     ?.filter((note) => note?.pinned === true)
+     ?.map((note) => (
+      <Note
+       title={note?.title}
+       content={note?.content}
+       key={note.id}
+       id={note?.id}
+       pinned={note?.pinned}
+      />
+     ))}
    </div>
+  </>
+ )
+}
 
-   <div className="w-full pr-6 flex flex-wrap gap-x-10 gap-y-2">
-    {unpinnedNotes?.map((note) => (
+function UnpinnedNotesList({ notes }) {
+ return (
+  <div className="w-full pr-6 flex flex-wrap gap-x-10 gap-y-2">
+   {notes
+    ?.filter((note) => note?.pinned === false)
+    ?.map((note) => (
      <Note
       title={note?.title}
       content={note?.content}
@@ -63,7 +78,6 @@ function Dashboard() {
       pinned={note?.pinned}
      />
     ))}
-   </div>
   </div>
  )
 }
