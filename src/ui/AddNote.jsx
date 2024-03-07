@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Button from "../components/Button"
 
 import { VscPinned } from "react-icons/vsc"
@@ -6,17 +5,21 @@ import { TbPinnedFilled } from "react-icons/tb"
 import { FaRegBell } from "react-icons/fa"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
+
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useAddNote } from "../hooks/useAddNote"
 
 function AddNote() {
- const { handleSubmit, register } = useForm()
  const [isActive, setIsActive] = useState(false)
  const [isPinned, setIsPinned] = useState(false)
  const { addNote } = useAddNote()
+ const { handleSubmit, register, reset } = useForm()
 
  function onSubmit(data) {
   addNote({ ...data, pinned: isPinned })
+  reset()
+  setIsActive(false)
  }
 
  return (
@@ -38,7 +41,9 @@ function AddNote() {
       className="cursor-pointer hover:bg-gray-200 flex items-center p-3 rounded-full"
       onClick={() => setIsPinned((pin) => !pin)}
      >
-      {(isPinned && <TbPinnedFilled fontSize={23} />) || (
+      {isPinned ? (
+       <TbPinnedFilled fontSize={23} />
+      ) : (
        <VscPinned fontSize={23} />
       )}
      </div>

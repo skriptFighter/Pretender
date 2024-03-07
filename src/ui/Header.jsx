@@ -5,7 +5,7 @@ import { IoIosRefresh } from "react-icons/io"
 import Button from "../components/Button"
 
 import { useLogout } from "../hooks/useLogout"
-import SearchBar from "../components/SearchBar"
+import SearchBar from "./SearchBar"
 import { Link } from "react-router-dom"
 import { useUserInfos } from "../hooks/useUserInfos"
 
