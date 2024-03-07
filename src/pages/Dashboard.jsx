@@ -31,15 +31,30 @@ function Dashboard() {
 
  const reversedNotes = filteredNotes?.reverse()
 
+ const pinnedNotes = reversedNotes?.filter((item) => item?.pinned === true)
+ const unpinnedNotes = reversedNotes?.filter((item) => item?.pinned === false)
+
  if (isLoading) return <p>loading...</p>
  if (error) return <p>error</p>
 
  return (
   <div className="flex flex-col gap-8 w-full">
    <AddNote />
+   <p>Pinned</p>
+   <div className="w-full pb-6 pr-6 flex flex-wrap gap-x-10 gap-y-2 border-b-2">
+    {pinnedNotes?.map((note) => (
+     <Note
+      title={note?.title}
+      content={note?.content}
+      key={note.id}
+      id={note?.id}
+      pinned={note?.pinned}
+     />
+    ))}
+   </div>
 
    <div className="w-full pr-6 flex flex-wrap gap-x-10 gap-y-2">
-    {reversedNotes?.map((note) => (
+    {unpinnedNotes?.map((note) => (
      <Note
       title={note?.title}
       content={note?.content}
@@ -83,31 +98,29 @@ export function Options({ isHover, id, pinned }) {
  }
 
  return (
-  id && (
-   <div
-    className={`flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
-   >
-    <Button header={true} onClick={handlePin}>
-     {pinned ? (
-      <TbPinnedFilled fontSize={20} cursor={"pointer"} />
-     ) : (
-      <VscPinned fontSize={20} cursor={"pointer"} />
-     )}
-    </Button>
+  <div
+   className={`flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
+  >
+   <Button header={true} onClick={handlePin}>
+    {pinned ? (
+     <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+    ) : (
+     <VscPinned fontSize={20} cursor={"pointer"} />
+    )}
+   </Button>
 
-    <Button header={true}>
-     <CiImageOn fontSize={20} cursor={"pointer"} />
-    </Button>
+   <Button header={true}>
+    <CiImageOn fontSize={20} cursor={"pointer"} />
+   </Button>
 
-    <Button header={true}>
-     <LuPaintbrush fontSize={20} cursor={"pointer"} />
-    </Button>
+   <Button header={true}>
+    <LuPaintbrush fontSize={20} cursor={"pointer"} />
+   </Button>
 
-    <Button header={true} onClick={() => deleteNote(id)}>
-     <MdDeleteOutline fontSize={20} cursor={"pointer"} />
-    </Button>
-   </div>
-  )
+   <Button header={true} onClick={() => deleteNote(id)}>
+    <MdDeleteOutline fontSize={20} cursor={"pointer"} />
+   </Button>
+  </div>
  )
 }
 
