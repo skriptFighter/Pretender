@@ -4,6 +4,7 @@ import toast from "react-hot-toast"
 
 export function useAddNote() {
  const queryClient = useQueryClient()
+
  const { mutate: addNote } = useMutation({
   mutationFn: addNoteApi,
   onSuccess: () => {

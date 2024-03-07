@@ -1,12 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { deleteNote as deleteNoteApi } from "../data/notes"
+import { updateNote as updateNoteApi } from "../data/notes"
 import toast from "react-hot-toast"
 
-export function useDeleteNote() {
+export function useUpdateNote() {
  const queryClient = useQueryClient()
 
- const { mutate: deleteNote } = useMutation({
-  mutationFn: deleteNoteApi,
+ const { mutate: updateNote } = useMutation({
+  mutationFn: (data) => {
+   const { isPinned, id } = data
+   updateNoteApi(isPinned, id)
+  },
   onSuccess: () => {
    queryClient.invalidateQueries(["notes"])
   },
@@ -15,5 +18,5 @@ export function useDeleteNote() {
   },
  })
 
- return { deleteNote }
+ return { updateNote }
 }
