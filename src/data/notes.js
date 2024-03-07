@@ -25,3 +25,9 @@ export async function addNote({ title, content, pinned }) {
 
  return data
 }
+
+export async function deleteNote(id) {
+ const { error } = await supabase.from("notes").delete().eq("id", id)
+
+ if (error) throw new Error(error.message)
+}

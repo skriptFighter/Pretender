@@ -10,13 +10,15 @@ import { useForm } from "react-hook-form"
 import { useAddNote } from "../hooks/useAddNote"
 
 function AddNote() {
- const { handleSubmit, register } = useForm()
+ const { handleSubmit, register, reset } = useForm()
  const [isActive, setIsActive] = useState(false)
  const [isPinned, setIsPinned] = useState(false)
  const { addNote } = useAddNote()
 
  function onSubmit(data) {
   addNote({ ...data, pinned: isPinned })
+  reset()
+  setIsActive(false)
  }
 
  return (
