@@ -11,7 +11,8 @@ import { TbPinnedFilled } from "react-icons/tb"
 import AddNote from "../ui/AddNote"
 import { useDeleteNote } from "../hooks/useDeleteNote"
 import { useSelector } from "react-redux"
-import { useUpdateNote } from "../hooks/useUpdateNote"
+import { useUpdatePinned } from "../hooks/useUpdatePinned"
+import ColorPicker from "../components/ColorPicker"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
@@ -35,7 +36,7 @@ function Dashboard() {
  if (error) return <p>error</p>
 
  return (
-  <div className="flex flex-col gap-8 w-full">
+  <div className="flex flex-col gap-8 h-screen w-full">
    <AddNote />
 
    <PinnedNotesList notes={reversedNotes} />
@@ -90,10 +91,10 @@ function Note({ title = "", content = "", id, pinned }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`w-56 px-2 mb-1 rounded-lg shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
+   className={`w-56 px-2 mb-1 rounded-2xl shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
   >
-   <div className="px-4 pt-8 flex flex-col gap-2">
-    <div className="font-semibold break-words text-lg">{title}</div>
+   <div className="px-4 pt-8 flex flex-col gap-2 ">
+    <div className="font-semibold break-words text-lg ">{title}</div>
     <p className="break-words pb-8 ">{content}</p>
    </div>
 
@@ -104,37 +105,39 @@ function Note({ title = "", content = "", id, pinned }) {
 
 export function Options({ isHover, id, pinned }) {
  const { deleteNote } = useDeleteNote()
- const { updateNote } = useUpdateNote()
- const [isPinned, setIsPinned] = useState(pinned)
-
- function handlePin() {
-  setIsPinned((pin) => !pin)
-  updateNote({ isPinned: !isPinned, id })
- }
+ const { updatePinned } = useUpdatePinned()
+ const [isPickOpen, setIsPickOpen] = useState(false)
 
  return (
-  <div
-   className={`flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
-  >
-   <Button header={true} onClick={handlePin}>
-    {pinned ? (
-     <TbPinnedFilled fontSize={20} cursor={"pointer"} />
-    ) : (
-     <VscPinned fontSize={20} cursor={"pointer"} />
-    )}
-   </Button>
+  <div className="relative">
+   <div
+    className={`flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
+   >
+    <Button
+     header={true}
+     onClick={() => updatePinned({ isPinned: !pinned, id })}
+    >
+     {pinned ? (
+      <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+     ) : (
+      <VscPinned fontSize={20} cursor={"pointer"} />
+     )}
+    </Button>
 
-   <Button header={true}>
-    <CiImageOn fontSize={20} cursor={"pointer"} />
-   </Button>
+    <Button header={true}>
+     <CiImageOn fontSize={20} cursor={"pointer"} />
+    </Button>
 
-   <Button header={true}>
-    <LuPaintbrush fontSize={20} cursor={"pointer"} />
-   </Button>
+    <Button header={true} onClick={() => setIsPickOpen((isOpen) => !isOpen)}>
+     <LuPaintbrush fontSize={20} cursor={"pointer"} />
+    </Button>
 
-   <Button header={true} onClick={() => deleteNote(id)}>
-    <MdDeleteOutline fontSize={20} cursor={"pointer"} />
-   </Button>
+    <Button header={true} onClick={() => deleteNote(id)}>
+     <MdDeleteOutline fontSize={20} cursor={"pointer"} />
+    </Button>
+   </div>
+
+   {isPickOpen && <ColorPicker setIsPickOpen={setIsPickOpen} id={id} />}
   </div>
  )
 }
