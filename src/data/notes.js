@@ -32,10 +32,19 @@ export async function deleteNote(id) {
  if (error) throw new Error(error.message)
 }
 
-export async function updateNote(isPinned, id) {
+export async function updatePinned(isPinned, id) {
  const { error } = await supabase
   .from("notes")
   .update({ pinned: isPinned })
+  .eq("id", id)
+
+ if (error) throw new Error(error.message)
+}
+
+export async function updateBgColor(color, id) {
+ const { error } = await supabase
+  .from("notes")
+  .update({ bgColor: color })
   .eq("id", id)
 
  if (error) throw new Error(error.message)
