@@ -37,6 +37,7 @@ function Dashboard() {
  return (
   <div className="flex flex-col gap-8 w-full">
    <AddNote />
+
    <PinnedNotesList notes={reversedNotes} />
    <UnpinnedNotesList notes={reversedNotes} />
   </div>
