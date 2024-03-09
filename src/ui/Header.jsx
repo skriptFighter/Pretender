@@ -1,70 +1,44 @@
-import { Button } from "@/components/ui/button";
+import { IoIosLogOut } from "react-icons/io"
+import { IoIosMenu } from "react-icons/io"
+import { IoIosRefresh } from "react-icons/io"
+
+import Button from "../components/Button"
+
+import { useLogout } from "../hooks/useLogout"
+import SearchBar from "./SearchBar"
+import { Link } from "react-router-dom"
+import { useUserInfos } from "../hooks/useUserInfos"
 
 function Header() {
-  return (
-    <div className="flex justify-between items-center">
-      <Button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </Button>
+ const { logout } = useLogout()
+ const { user } = useUserInfos()
+ const { username, image } = user?.[0] || {}
 
-      <div>Pretender</div>
+ return (
+  <div className="flex justify-between items-center p-5">
+   <Item icon={<IoIosMenu fontSize={27} />} />
+   <SearchBar />
 
-      <div className="flex items-center gap-5">
-        <img
-          src="https://i.pravatar.cc/200"
-          alt=""
-          className="w-10 h-10 rounded-full"
-        />
-        <p>John Doe</p>
-        <Button className="">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
-            />
-          </svg>
-        </Button>
+   <div className="flex items-center gap-4">
+    <Link to={"/profile"}>
+     <img src={image} className="w-10 h-10 rounded-full" />
+    </Link>
 
-        <Button className="flex gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-            />
-          </svg>
-        </Button>
-      </div>
-    </div>
-  );
+    <p>{username}</p>
+
+    <Item icon={<IoIosRefresh fontSize={27} />} />
+    <Item onClick={logout} icon={<IoIosLogOut fontSize={27} />} />
+   </div>
+  </div>
+ )
 }
 
-export default Header;
+function Item({ icon, onClick }) {
+ return (
+  <Button onClick={onClick} header={true}>
+   {icon}
+  </Button>
+ )
+}
+
+export default Header
