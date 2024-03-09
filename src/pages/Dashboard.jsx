@@ -13,7 +13,7 @@ import { useDeleteNote } from "../hooks/useDeleteNote"
 import { useSelector } from "react-redux"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
-import Modal from "../components/Modal"
+import { Link } from "react-router-dom"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
@@ -87,9 +87,10 @@ function UnpinnedNotesList({ notes }) {
  )
 }
 
-function Note({ title = "", content = "", id, pinned, bgColor }) {
+function Note({ title = null, content = null, id, pinned, bgColor }) {
  const [isHover, setIsHover] = useState(false)
- const [isOpenModal, setIsOpenModal] = useState(false)
+
+ const toUrl = `/note/${id}/${encodeURIComponent(title || "untitled")}/${encodeURIComponent(content || "uncontent")}/${pinned}/${encodeURIComponent(bgColor)}`
 
  return (
   <div
@@ -98,16 +99,12 @@ function Note({ title = "", content = "", id, pinned, bgColor }) {
    className={`w-56 mb-1 rounded-2xl shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
    style={{ backgroundColor: bgColor }}
   >
-   <div
-    className="px-4 pt-8 flex flex-col gap-2 "
-    onClick={() => setIsOpenModal(true)}
-   >
+   <Link className="px-4 pt-8 flex flex-col gap-2 cursor-default" to={toUrl}>
     <div className="font-semibold break-words text-lg ">{title}</div>
     <p className="break-words pb-8 ">{content}</p>
-   </div>
+   </Link>
 
    <Options isHover={isHover} id={id} pinned={pinned} />
-   {isOpenModal && <Modal setIsOpenModal={setIsOpenModal} />}
   </div>
  )
 }
