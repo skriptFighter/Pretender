@@ -1,29 +1,36 @@
 import { CirclePicker } from "react-color"
 import { useForm } from "react-hook-form"
 import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
+import { useClickOutside } from "../hooks/useClickOutside"
 
 function ColorPicker({ setIsPickOpen, id }) {
  const { register, handleSubmit, watch, setValue } = useForm()
  const { updateBgColor } = useUpdateBgColor()
  const selectedColor = watch("color")
 
+ const ref = useClickOutside(() => setIsPickOpen(null))
+
  const handleColorChange = (color) => {
   setValue("color", color.hex)
  }
 
  const onSubmit = (data) => {
-  setIsPickOpen((isOpen) => !isOpen)
+  setIsPickOpen(null)
   updateBgColor({ ...data, id })
  }
 
  return (
-  <div className="w-64 h-10 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 flex items-center gap-3 p-2">
+  <div
+   className="flex items-center w-80 h-10 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 "
+   ref={ref}
+  >
    <form>
     <CirclePicker
      onChange={handleColorChange}
      color={selectedColor}
      onChangeComplete={handleSubmit(onSubmit)}
-     colors={["#ff0000", "#0000ff", "#00ff00", "#ffff00", "#800080", "#ffa500"]}
+     colors={colorsList}
+     styles={pickerStyles}
     />
     <input type="hidden" {...register("color")} />
    </form>
@@ -32,3 +39,23 @@ function ColorPicker({ setIsPickOpen, id }) {
 }
 
 export default ColorPicker
+
+const pickerStyles = {
+ default: {
+  card: {
+   width: "100%",
+   "margin-right": "0",
+   "margin-left": "22px",
+  },
+ },
+}
+
+const colorsList = [
+ "#f44336",
+ "#0693e3",
+ "#00d084",
+ "#ffeb3b",
+ "#b279d2",
+ "#ff6900",
+ "#e91e63",
+]

@@ -10,6 +10,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useAddNote } from "../hooks/useAddNote"
 import TextareaAutosize from "react-textarea-autosize"
+import { useClickOutside } from "../hooks/useClickOutside"
 
 function AddNote() {
  const [isActive, setIsActive] = useState(false)
@@ -17,6 +18,8 @@ function AddNote() {
 
  const { addNote } = useAddNote()
  const { handleSubmit, register, reset } = useForm()
+
+ const ref = useClickOutside(() => setIsActive(false))
 
  function onSubmit(data) {
   addNote({ ...data, pinned: isPinned })
@@ -26,6 +29,7 @@ function AddNote() {
 
  return (
   <form
+   ref={ref}
    onSubmit={handleSubmit(onSubmit)}
    className="flex flex-col justify-between p-4 w-1/3 self-center shadow-zinc-700 shadow-sm rounded-lg"
    onClick={() => setIsActive(true)}

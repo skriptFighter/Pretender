@@ -13,6 +13,7 @@ import { useDeleteNote } from "../hooks/useDeleteNote"
 import { useSelector } from "react-redux"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
+import { Link } from "react-router-dom"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
@@ -59,6 +60,7 @@ function PinnedNotesList({ notes }) {
        key={note.id}
        id={note?.id}
        pinned={note?.pinned}
+       bgColor={note?.bgColor}
       />
      ))}
    </div>
@@ -78,25 +80,29 @@ function UnpinnedNotesList({ notes }) {
       key={note.id}
       id={note?.id}
       pinned={note?.pinned}
+      bgColor={note?.bgColor}
      />
     ))}
   </div>
  )
 }
 
-function Note({ title = "", content = "", id, pinned }) {
+function Note({ title = null, content = null, id, pinned, bgColor }) {
  const [isHover, setIsHover] = useState(false)
+
+ const toUrl = `/note/${id}/${encodeURIComponent(title || "untitled")}/${encodeURIComponent(content || "uncontent")}/${pinned}/${encodeURIComponent(bgColor)}`
 
  return (
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`w-56 px-2 mb-1 rounded-2xl shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
+   className={`w-56 mb-1 rounded-2xl shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
+   style={{ backgroundColor: bgColor }}
   >
-   <div className="px-4 pt-8 flex flex-col gap-2 ">
+   <Link className="px-4 pt-8 flex flex-col gap-2 cursor-default" to={toUrl}>
     <div className="font-semibold break-words text-lg ">{title}</div>
     <p className="break-words pb-8 ">{content}</p>
-   </div>
+   </Link>
 
    <Options isHover={isHover} id={id} pinned={pinned} />
   </div>
@@ -106,12 +112,17 @@ function Note({ title = "", content = "", id, pinned }) {
 export function Options({ isHover, id, pinned }) {
  const { deleteNote } = useDeleteNote()
  const { updatePinned } = useUpdatePinned()
- const [isPickOpen, setIsPickOpen] = useState(false)
+ const [isPickOpen, setIsPickOpen] = useState(null)
+
+ //FIX TOGGLE
+ function togglePick(id) {
+  setIsPickOpen(isPickOpen === id ? null : id)
+ }
 
  return (
   <div className="relative">
    <div
-    className={`flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
+    className={`px-2 flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
    >
     <Button
      header={true}
@@ -128,7 +139,7 @@ export function Options({ isHover, id, pinned }) {
      <CiImageOn fontSize={20} cursor={"pointer"} />
     </Button>
 
-    <Button header={true} onClick={() => setIsPickOpen((isOpen) => !isOpen)}>
+    <Button header={true} onClick={() => togglePick(id)}>
      <LuPaintbrush fontSize={20} cursor={"pointer"} />
     </Button>
 
@@ -137,7 +148,7 @@ export function Options({ isHover, id, pinned }) {
     </Button>
    </div>
 
-   {isPickOpen && <ColorPicker setIsPickOpen={setIsPickOpen} id={id} />}
+   {isPickOpen === id && <ColorPicker setIsPickOpen={setIsPickOpen} id={id} />}
   </div>
  )
 }

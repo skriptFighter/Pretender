@@ -17,6 +17,7 @@ import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
+import ModalNote from "./pages/ModalNote"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -31,6 +32,10 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
+     <Route
+      path="/note/:id/:title/:content/:pinned/:bgColor"
+      element={<ModalNote />}
+     />
     </Route>
 
     <Route path="profile" element={<Profile />} />
