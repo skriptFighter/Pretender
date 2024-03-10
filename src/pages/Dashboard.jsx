@@ -12,8 +12,8 @@ import AddNote from "../ui/AddNote"
 import { useDeleteNote } from "../hooks/useDeleteNote"
 import { useSelector } from "react-redux"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
-import ColorPicker from "../components/ColorPicker"
 import { Link } from "react-router-dom"
+import ColorPicker from "../components/ColorPicker"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
