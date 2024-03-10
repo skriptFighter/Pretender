@@ -10,7 +10,7 @@ export function useUpdateBgColor() {
    const { color, id } = data
    updateBgColorApi(color, id)
   },
-  onSuccess: (newData) => {
+  onSuccess: () => {
    queryClient.invalidateQueries(["notes"])
   },
   onError: (err) => {

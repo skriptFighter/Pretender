@@ -15,7 +15,6 @@ import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import { Link } from "react-router-dom"
 import ColorPicker from "../components/ColorPicker"
 import { setNotes } from "../notesSlice"
-import { useQueryClient } from "@tanstack/react-query"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()

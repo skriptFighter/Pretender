@@ -9,7 +9,7 @@ import { FaRegBell } from "react-icons/fa"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 import ColorPicker from "../components/ColorPicker"
@@ -27,7 +27,7 @@ function ModalNote() {
  const currentNote = notes.filter((note) => note.id === Number(id))
  const { title, content, pinned, bgColor } = currentNote[0]
 
- const { handleSubmit, register, reset } = useForm()
+ const { handleSubmit, register } = useForm()
  const { updateNote } = useUpdateNote()
 
  const [selectedColor, setSelectedColor] = useState(bgColor)
