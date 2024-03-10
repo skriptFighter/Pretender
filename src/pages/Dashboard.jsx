@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNotes } from "../hooks/useNotes"
 import Button from "../components/Button"
 
@@ -10,14 +10,24 @@ import { TbPinnedFilled } from "react-icons/tb"
 
 import AddNote from "../ui/AddNote"
 import { useDeleteNote } from "../hooks/useDeleteNote"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import { Link } from "react-router-dom"
 import ColorPicker from "../components/ColorPicker"
+import { setNotes } from "../notesSlice"
+import { useQueryClient } from "@tanstack/react-query"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
- const { search: searchValue } = useSelector((state) => state.notes)
+ const dispatch = useDispatch()
+
+ useEffect(() => {
+  if (notes) {
+   dispatch(setNotes(notes))
+  }
+ }, [dispatch, notes])
+
+ const { search: searchValue } = useSelector((state) => state.search)
 
  const filteredNotes = notes?.filter((item) => {
   const filteredContent = item?.content
@@ -90,8 +100,6 @@ function UnpinnedNotesList({ notes }) {
 function Note({ title = null, content = null, id, pinned, bgColor }) {
  const [isHover, setIsHover] = useState(false)
 
- const toUrl = `/note/${id}?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}&pinned=${pinned}&bgColor=${encodeURIComponent(bgColor)}`
-
  return (
   <div
    onMouseEnter={() => setIsHover(true)}
@@ -99,7 +107,10 @@ function Note({ title = null, content = null, id, pinned, bgColor }) {
    className={`w-56 mb-1 rounded-2xl shadow-md outline-black dark:shadow-sm dark:shadow-slate-800 self-start `}
    style={{ backgroundColor: bgColor }}
   >
-   <Link className="px-4 pt-8 flex flex-col gap-2 cursor-default" to={toUrl}>
+   <Link
+    className="px-4 pt-8 flex flex-col gap-2 cursor-default"
+    to={`/note/${id}`}
+   >
     <div className="font-semibold break-words text-lg ">{title}</div>
     <p className="break-words pb-8 ">{content}</p>
    </Link>

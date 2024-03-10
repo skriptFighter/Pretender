@@ -1,6 +1,6 @@
 import { IoIosSearch } from "react-icons/io"
 import { useDispatch } from "react-redux"
-import { searchValue } from "../notesSlice"
+import { searchValue } from "../searchSlice"
 
 function SearchBar() {
  const dispatch = useDispatch()

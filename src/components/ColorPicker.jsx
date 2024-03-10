@@ -11,13 +11,15 @@ const colors = [
  { id: 7, color: "#e91e63" },
 ]
 
-function ColorPicker({ id, setIsPickOpen }) {
+function ColorPicker({ id, setIsPickOpen, setSelectedColor }) {
+ //setSelectedColor is for edit note
+
  const { updateBgColor } = useUpdateBgColor()
  const ref = useClickOutside(() => setIsPickOpen(null))
 
  const handleColorChange = (color) => {
   setIsPickOpen(null)
-  updateBgColor({ color, id })
+  id ? updateBgColor({ color, id }) : setSelectedColor(color)
  }
 
  return (
