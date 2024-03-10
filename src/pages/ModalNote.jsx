@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useClickOutside } from "../hooks/useClickOutside"
 
 import Button from "../components/Button"
@@ -17,7 +17,15 @@ import { CirclePicker } from "react-color"
 function ModalNote() {
  const ref = useClickOutside(() => navigate("/"))
  const navigate = useNavigate()
- const { title, content, pinned, bgColor } = useParams()
+
+ const { id } = useParams()
+ const [searchParams] = useSearchParams()
+ const title = searchParams.get("title")
+ const content = searchParams.get("content")
+ const pinned = searchParams.get("pinned")
+ const bgColor = searchParams.get("bgColor")
+ console.log(id)
+
  const [selectedColor, setSelectedColor] = useState(bgColor)
 
  const [isPinned, setIsPinned] = useState(pinned)

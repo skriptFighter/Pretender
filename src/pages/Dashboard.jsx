@@ -90,7 +90,7 @@ function UnpinnedNotesList({ notes }) {
 function Note({ title = null, content = null, id, pinned, bgColor }) {
  const [isHover, setIsHover] = useState(false)
 
- const toUrl = `/note/${id}/${encodeURIComponent(title || "untitled")}/${encodeURIComponent(content || "uncontent")}/${pinned}/${encodeURIComponent(bgColor)}`
+ const toUrl = `/note/${id}?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}&pinned=${pinned}&bgColor=${encodeURIComponent(bgColor)}`
 
  return (
   <div
