@@ -9,23 +9,27 @@ import { FaRegBell } from "react-icons/fa"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 import ColorPicker from "../components/ColorPicker"
 import { useUpdateNote } from "../hooks/useUpdateNote"
-import { useQueryClient } from "@tanstack/react-query"
+import { useDispatch, useSelector } from "react-redux"
+import { selectCurrentNote, setCurrentNote } from "../notesSlice"
 
 function ModalNote() {
  const ref = useClickOutside(() => navigate("/"))
  const navigate = useNavigate()
 
  const { id } = useParams()
+ const dispatch = useDispatch()
+ const currentNote = useSelector(selectCurrentNote)
+ const { title, content, pinned, bgColor } = currentNote
 
- const queryClient = useQueryClient()
- const notes = queryClient.getQueryData(["notes"])
- const currentNote = notes.filter((note) => note.id === Number(id))
- const { title, content, pinned, bgColor } = currentNote[0]
+ useEffect(() => {
+  dispatch(setCurrentNote(id))
+ }, [dispatch, id])
+ console.log(currentNote)
 
  const { handleSubmit, register } = useForm()
  const { updateNote } = useUpdateNote()
