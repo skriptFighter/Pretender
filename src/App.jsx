@@ -32,10 +32,7 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
-     <Route
-      path="/note/:id/:title/:content/:pinned/:bgColor"
-      element={<ModalNote />}
-     />
+     <Route path="/note/:id" element={<ModalNote />} />
     </Route>
 
     <Route path="profile" element={<Profile />} />

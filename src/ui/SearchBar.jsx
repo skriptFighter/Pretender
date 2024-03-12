@@ -1,12 +1,12 @@
 import { IoIosSearch } from "react-icons/io"
 import { useDispatch } from "react-redux"
-import { searchValue } from "../notesSlice"
+import { setSearchValue } from "../notesSlice"
 
 function SearchBar() {
  const dispatch = useDispatch()
 
  const handleChange = (e) => {
-  dispatch(searchValue(e.target.value))
+  dispatch(setSearchValue(e.target.value))
  }
 
  return (

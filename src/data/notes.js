@@ -42,10 +42,22 @@ export async function updatePinned(isPinned, id) {
 }
 
 export async function updateBgColor(color, id) {
- const { error } = await supabase
+ const { data, error } = await supabase
   .from("notes")
   .update({ bgColor: color })
   .eq("id", id)
 
  if (error) throw new Error(error.message)
+ return data
+}
+
+export async function updateNote(note) {
+ const { data, error } = await supabase
+  .from("notes")
+  .update({ ...note })
+  .eq("id", note.id)
+
+ if (error) throw new Error(error.message)
+
+ return data
 }

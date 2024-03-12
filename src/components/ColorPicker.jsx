@@ -1,61 +1,42 @@
-import { CirclePicker } from "react-color"
-import { useForm } from "react-hook-form"
 import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
 import { useClickOutside } from "../hooks/useClickOutside"
 
-function ColorPicker({ setIsPickOpen, id }) {
- const { register, handleSubmit, watch, setValue } = useForm()
- const { updateBgColor } = useUpdateBgColor()
- const selectedColor = watch("color")
+const colors = [
+ { id: 1, color: "#f44336" },
+ { id: 2, color: "#0693e3" },
+ { id: 3, color: "#00d084" },
+ { id: 4, color: "#ffeb3b" },
+ { id: 5, color: "#b279d2" },
+ { id: 6, color: "#ff6900" },
+ { id: 7, color: "#e91e63" },
+]
 
+function ColorPicker({ id, setIsPickOpen, setSelectedColor }) {
+ //setSelectedColor is for edit note
+
+ const { updateBgColor } = useUpdateBgColor()
  const ref = useClickOutside(() => setIsPickOpen(null))
 
  const handleColorChange = (color) => {
-  setValue("color", color.hex)
- }
-
- const onSubmit = (data) => {
   setIsPickOpen(null)
-  updateBgColor({ ...data, id })
+  id ? updateBgColor({ color, id }) : setSelectedColor(color)
  }
 
  return (
   <div
-   className="flex items-center w-80 h-10 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 "
+   className="flex items-center justify-between gap-3 px-4 py-2 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 "
    ref={ref}
   >
-   <form>
-    <CirclePicker
-     onChange={handleColorChange}
-     color={selectedColor}
-     onChangeComplete={handleSubmit(onSubmit)}
-     colors={colorsList}
-     styles={pickerStyles}
+   {colors.map((color) => (
+    <div
+     key={color.id}
+     onClick={() => handleColorChange(color.color)}
+     style={{ backgroundColor: color.color }}
+     className="w-7 h-7 rounded-full cursor-pointer hover:scale-125 transition-all duration-300"
     />
-    <input type="hidden" {...register("color")} />
-   </form>
+   ))}
   </div>
  )
 }
 
 export default ColorPicker
-
-const pickerStyles = {
- default: {
-  card: {
-   width: "100%",
-   "margin-right": "0",
-   "margin-left": "22px",
-  },
- },
-}
-
-const colorsList = [
- "#f44336",
- "#0693e3",
- "#00d084",
- "#ffeb3b",
- "#b279d2",
- "#ff6900",
- "#e91e63",
-]
