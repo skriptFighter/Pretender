@@ -4,7 +4,7 @@ import { useNotes } from "../hooks/useNotes"
 import AddNote from "../ui/AddNote"
 import { useDispatch } from "react-redux"
 
-import { setNotes } from "../notesSlice"
+import { setNotes, setSearchValue } from "../notesSlice"
 import PinnedNotes from "../ui/PinnedNotes"
 import UnpinnedNotes from "../ui/UnpinnedNotes"
 
@@ -15,6 +15,7 @@ function Dashboard() {
  useEffect(() => {
   if (notes) {
    dispatch(setNotes(notes))
+   dispatch(setSearchValue(""))
   }
  }, [dispatch, notes])
 

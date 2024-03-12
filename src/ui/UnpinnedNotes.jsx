@@ -4,7 +4,6 @@ import { selectSearch } from "../notesSlice"
 
 function UnpinnedNotes() {
  const notes = useSelector(selectSearch)
- console.log(notes)
  return (
   <div className="w-full pr-6 flex flex-wrap gap-x-10 gap-y-2">
    {notes

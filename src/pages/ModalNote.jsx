@@ -9,33 +9,26 @@ import { FaRegBell } from "react-icons/fa"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 import ColorPicker from "../components/ColorPicker"
 import { useUpdateNote } from "../hooks/useUpdateNote"
-import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentNote, setCurrentNote } from "../notesSlice"
+import { useSelector } from "react-redux"
+import { selectCurrentNote } from "../notesSlice"
 
 function ModalNote() {
  const ref = useClickOutside(() => navigate("/"))
  const navigate = useNavigate()
 
- const { id } = useParams()
- const dispatch = useDispatch()
  const currentNote = useSelector(selectCurrentNote)
- const { title, content, pinned, bgColor } = currentNote
-
- useEffect(() => {
-  dispatch(setCurrentNote(id))
- }, [dispatch, id])
- console.log(currentNote)
+ const { id } = useParams()
 
  const { handleSubmit, register } = useForm()
  const { updateNote } = useUpdateNote()
 
- const [selectedColor, setSelectedColor] = useState(bgColor)
- const [isPinned, setIsPinned] = useState(Boolean(pinned))
+ const [selectedColor, setSelectedColor] = useState(currentNote?.bgColor)
+ const [isPinned, setIsPinned] = useState(currentNote?.pinned)
 
  function onSubmit(data) {
   updateNote({ ...data, pinned: isPinned, bgColor: selectedColor, id })
@@ -53,7 +46,7 @@ function ModalNote() {
      <div className="flex justify-between">
       <TextareaAutosize
        placeholder="Title"
-       defaultValue={title}
+       defaultValue={currentNote?.title}
        maxLength={100}
        maxRows={2}
        className="p-2 w-full font-semibold text-lg resize-none dark:bg-black dark:text-white  focus:border-none focus:outline-none"
@@ -77,7 +70,7 @@ function ModalNote() {
       maxLength={800}
       maxRows={10}
       placeholder={"Take a note..."}
-      defaultValue={content}
+      defaultValue={currentNote?.content}
       className="p-2 w-full resize-none dark:bg-black dark:text-white focus:border-none focus:outline-none"
       style={{ backgroundColor: selectedColor }}
       {...register("content")}

@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { Options } from "./Options"
 import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setCurrentNote } from "../notesSlice"
 
 function Note({ title = null, content = null, id, pinned, bgColor }) {
  const [isHover, setIsHover] = useState(false)
+ const dispatch = useDispatch()
 
  return (
   <div
@@ -15,6 +18,7 @@ function Note({ title = null, content = null, id, pinned, bgColor }) {
    <Link
     className="px-4 pt-8 flex flex-col gap-2 cursor-default"
     to={`/note/${id}`}
+    onClick={() => dispatch(setCurrentNote(id))}
    >
     <div className="font-semibold break-words text-lg ">{title}</div>
     <p className="break-words pb-8 ">{content}</p>
