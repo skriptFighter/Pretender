@@ -89,7 +89,7 @@ function ModalNote() {
 }
 
 function Options({ setSelectedColor }) {
- const [isPickOpen, setIsPickOpen] = useState(false)
+ const [isPickerOpen, setIsPickerOpen] = useState(false)
 
  return (
   <div className="flex gap-8 items-center ">
@@ -103,14 +103,14 @@ function Options({ setSelectedColor }) {
 
    <div
     className="cursor-pointer hover:bg-gray-200 flex items-center p-2 rounded-full"
-    onClick={() => setIsPickOpen(true)}
+    onClick={() => setIsPickerOpen(true)}
    >
     <LuPaintbrush fontSize={18} />
    </div>
 
-   {isPickOpen && (
+   {isPickerOpen && (
     <ColorPicker
-     setIsPickOpen={setIsPickOpen}
+     setIsPickerOpen={setIsPickerOpen}
      setSelectedColor={setSelectedColor}
     />
    )}

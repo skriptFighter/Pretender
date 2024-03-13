@@ -12,10 +12,10 @@ import { MdDeleteOutline } from "react-icons/md"
 export function Options({ isHover, id, pinned }) {
  const { deleteNote } = useDeleteNote()
  const { updatePinned } = useUpdatePinned()
- const [isPickOpen, setIsPickOpen] = useState(null)
+ const [isPickerOpen, setIsPickerOpen] = useState(null)
 
  function togglePick(id) {
-  setIsPickOpen(isPickOpen === id ? null : id)
+  setIsPickerOpen(isPickerOpen === id ? null : id)
  }
 
  return (
@@ -47,7 +47,9 @@ export function Options({ isHover, id, pinned }) {
     </Button>
    </div>
 
-   {isPickOpen === id && <ColorPicker setIsPickOpen={setIsPickOpen} id={id} />}
+   {isPickerOpen === id && (
+    <ColorPicker setIsPickerOpen={setIsPickerOpen} id={id} />
+   )}
   </div>
  )
 }

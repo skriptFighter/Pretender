@@ -11,14 +11,14 @@ const colors = [
  { id: 7, color: "#e91e63" },
 ]
 
-function ColorPicker({ id, setIsPickOpen, setSelectedColor }) {
+function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
  //setSelectedColor is for edit note
 
  const { updateBgColor } = useUpdateBgColor()
- const ref = useClickOutside(() => setIsPickOpen(null))
+ const ref = useClickOutside(() => setIsPickerOpen(null))
 
  const handleColorChange = (color) => {
-  setIsPickOpen(null)
+  setIsPickerOpen(null)
   id ? updateBgColor({ color, id }) : setSelectedColor(color)
  }
 
