@@ -1,4 +1,4 @@
-import supabase from "./supabase"
+import supabase, { supabaseUrl } from "./supabase"
 import { getAuthUser } from "./users"
 
 export async function getNotes() {
@@ -14,16 +14,45 @@ export async function getNotes() {
  return data
 }
 
-export async function addNote({ title, content, pinned }) {
+export async function addNote(note) {
  const user = await getAuthUser()
 
- const { data, error } = await supabase
-  .from("notes")
-  .insert([{ title, content, pinned, user_id: user.id }])
-  .select()
- if (error) throw new Error(error.message)
+ if (note.image) {
+  const imageName = `${Math.random()}-${note.image.name}`.replaceAll("/", "")
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/notesImages/${imageName}`
 
- return data
+  const { error: storageError } = await supabase.storage
+   .from("notesImages")
+   .upload(imageName, note.image)
+
+  if (storageError) {
+   await supabase.from("notes").delete().eq("image", imagePath)
+   throw new Error(storageError.message)
+  }
+
+  const { data, error } = await supabase
+   .from("notes")
+   .insert([{ ...note, image: imagePath, user_id: user.id }])
+   .select()
+
+  if (error) {
+   await supabase.from("notes").delete().eq("image", imagePath)
+   throw new Error(error.message)
+  }
+
+  return data
+ } else {
+  const { data, error } = await supabase
+   .from("notes")
+   .insert([{ ...note, user_id: user.id }])
+   .select()
+
+  if (error) {
+   throw new Error(error.message)
+  }
+
+  return data
+ }
 }
 
 export async function deleteNote(id) {
