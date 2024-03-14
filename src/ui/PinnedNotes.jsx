@@ -18,6 +18,7 @@ function PinnedNotes() {
        id={note?.id}
        pinned={note?.pinned}
        bgColor={note?.bgColor}
+       image={note?.image}
       />
      ))}
    </div>

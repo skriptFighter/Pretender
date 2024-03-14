@@ -23,7 +23,7 @@ function Dashboard() {
  if (error) return <p>error</p>
 
  return (
-  <div className="flex flex-col gap-8 h-screen w-full">
+  <div className="flex flex-col gap-8 pb-20 w-full">
    <AddNote />
 
    <PinnedNotes />
