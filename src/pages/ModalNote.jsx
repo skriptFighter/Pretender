@@ -33,7 +33,7 @@ function ModalNote() {
     dispatch(setCurrentNote(id))
    }
   },
-  [notes, id]
+  [dispatch, notes, id]
  )
 
  const currentNote = useSelector(selectCurrentNote)
