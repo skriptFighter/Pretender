@@ -1,6 +1,7 @@
 import { IoIosLogOut } from "react-icons/io"
 import { IoIosMenu } from "react-icons/io"
-import { IoIosRefresh } from "react-icons/io"
+import { TfiViewList } from "react-icons/tfi"
+import { IoGridOutline } from "react-icons/io5"
 
 import Button from "../components/Button"
 
@@ -8,15 +9,23 @@ import { useLogout } from "../hooks/useLogout"
 import SearchBar from "./SearchBar"
 import { Link } from "react-router-dom"
 import { useUserInfos } from "../hooks/useUserInfos"
+import { useDispatch, useSelector } from "react-redux"
+import { selectIsGrid, setGridView } from "../notesSlice"
 
 function Header() {
  const { logout } = useLogout()
  const { user } = useUserInfos()
  const { username, image } = user?.[0] || {}
 
+ const dispatch = useDispatch()
+ const isGridView = useSelector(selectIsGrid)
+
  return (
   <div className="flex justify-between items-center p-5">
-   <Item icon={<IoIosMenu fontSize={27} />} />
+   <Item>
+    <IoIosMenu fontSize={27} />
+   </Item>
+
    <SearchBar />
 
    <div className="flex items-center gap-4">
@@ -26,17 +35,26 @@ function Header() {
 
     <p>{username}</p>
 
-    <Item icon={<IoIosRefresh fontSize={27} />} />
-    <Item onClick={logout} icon={<IoIosLogOut fontSize={27} />} />
+    <Item onClick={() => dispatch(setGridView())}>
+     {isGridView ? (
+      <IoGridOutline fontSize={27} className="p-1" />
+     ) : (
+      <TfiViewList fontSize={27} className="p-1" />
+     )}
+    </Item>
+
+    <Item onClick={logout}>
+     <IoIosLogOut fontSize={27} />
+    </Item>
    </div>
   </div>
  )
 }
 
-function Item({ icon, onClick }) {
+function Item({ onClick, children }) {
  return (
   <Button onClick={onClick} header={true}>
-   {icon}
+   {children}
   </Button>
  )
 }

@@ -9,20 +9,34 @@ import { FaRegBell } from "react-icons/fa"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 import ColorPicker from "../components/ColorPicker"
 import { useUpdateNote } from "../hooks/useUpdateNote"
-import { useSelector } from "react-redux"
-import { selectCurrentNote } from "../notesSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { selectCurrentNote, setCurrentNote, setNotes } from "../notesSlice"
+import { useNotes } from "../hooks/useNotes"
 
 function ModalNote() {
+ //todo fix pinned state on open modal link
+ const { notes } = useNotes()
+ const dispatch = useDispatch()
  const ref = useClickOutside(() => navigate("/"))
  const navigate = useNavigate()
 
- const currentNote = useSelector(selectCurrentNote)
  const { id } = useParams()
+ useEffect(
+  function () {
+   if (notes) {
+    dispatch(setNotes(notes))
+    dispatch(setCurrentNote(id))
+   }
+  },
+  [notes, id]
+ )
+
+ const currentNote = useSelector(selectCurrentNote)
 
  const { handleSubmit, register } = useForm()
  const { updateNote } = useUpdateNote()
@@ -41,7 +55,7 @@ function ModalNote() {
     <form
      onSubmit={handleSubmit(onSubmit)}
      className="relative flex flex-col justify-between p-4 self-center shadow-zinc-700 shadow-sm rounded-lg"
-     style={{ backgroundColor: selectedColor }}
+     style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
     >
      <div className="flex justify-between">
       <TextareaAutosize
@@ -50,7 +64,7 @@ function ModalNote() {
        maxLength={100}
        maxRows={2}
        className="p-2 w-full font-semibold text-lg resize-none dark:bg-black dark:text-white  focus:border-none focus:outline-none"
-       style={{ backgroundColor: selectedColor }}
+       style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
        {...register("title")}
       />
 
@@ -72,7 +86,7 @@ function ModalNote() {
       placeholder={"Take a note..."}
       defaultValue={currentNote?.content}
       className="p-2 w-full resize-none dark:bg-black dark:text-white focus:border-none focus:outline-none"
-      style={{ backgroundColor: selectedColor }}
+      style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
       {...register("content")}
      />
 
