@@ -12,6 +12,7 @@ import { useAddNote } from "../hooks/useAddNote"
 import TextareaAutosize from "react-textarea-autosize"
 import { useClickOutside } from "../hooks/useClickOutside"
 import ColorPicker from "../components/ColorPicker"
+import toast from "react-hot-toast"
 
 function AddNote() {
  const [isActive, setIsActive] = useState(false)
@@ -19,14 +20,21 @@ function AddNote() {
  const [selectedColor, setSelectedColor] = useState()
 
  const { addNote } = useAddNote()
- const { handleSubmit, register, reset, setValue } = useForm()
+ const { handleSubmit, register, reset, setValue, watch } = useForm()
 
  const ref = useClickOutside(() => setIsActive(false))
+ const selectedImage = watch("image")
 
  function onSubmit(data) {
+  if (selectedImage?.type !== "image/jpeg") {
+   toast.error("Please provide a JPEG image")
+   return
+  }
+
   addNote({ ...data, pinned: isPinned, bgColor: selectedColor })
   reset()
   setIsActive(false)
+  setSelectedColor(null)
  }
 
  return (
@@ -38,27 +46,37 @@ function AddNote() {
    style={{ backgroundColor: selectedColor }}
   >
    {isActive && (
-    <div className="flex justify-between">
-     <TextareaAutosize
-      placeholder="Title"
-      maxLength={100}
-      maxRows={2}
-      className="p-2 w-full font-semibold text-lg resize-none dark:bg-black dark:text-white  focus:border-none focus:outline-none"
-      style={{ backgroundColor: selectedColor }}
-      {...register("title")}
-     />
+    <>
+     {selectedImage && (
+      <img
+       src={URL.createObjectURL(selectedImage)}
+       alt="Note image"
+       className="rounded-2xl"
+      />
+     )}
 
-     <div
-      className="cursor-pointer hover:bg-gray-200 flex items-center p-3 h-fit rounded-full"
-      onClick={() => setIsPinned((pin) => !pin)}
-     >
-      {isPinned ? (
-       <TbPinnedFilled fontSize={23} />
-      ) : (
-       <VscPinned fontSize={23} />
-      )}
+     <div className="flex justify-between">
+      <TextareaAutosize
+       placeholder="Title"
+       maxLength={100}
+       maxRows={2}
+       className="p-2 w-full font-semibold text-lg resize-none dark:bg-black dark:text-white  focus:border-none focus:outline-none"
+       style={{ backgroundColor: selectedColor }}
+       {...register("title")}
+      />
+
+      <div
+       className="cursor-pointer hover:bg-gray-200 flex items-center p-3 h-fit rounded-full"
+       onClick={() => setIsPinned((pin) => !pin)}
+      >
+       {isPinned ? (
+        <TbPinnedFilled fontSize={23} />
+       ) : (
+        <VscPinned fontSize={23} />
+       )}
+      </div>
      </div>
-    </div>
+    </>
    )}
 
    <TextareaAutosize

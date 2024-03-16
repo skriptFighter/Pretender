@@ -4,6 +4,7 @@ import { selectSearch } from "../notesSlice"
 
 function PinnedNotes() {
  const notes = useSelector(selectSearch)
+
  return (
   <>
    <p>Pinned</p>

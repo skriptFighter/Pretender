@@ -5,6 +5,7 @@ import { useUserInfos } from "../hooks/useUserInfos"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
+import toast from "react-hot-toast"
 
 function Profile() {
  const { editProfile } = useEditProfile()
@@ -15,7 +16,9 @@ function Profile() {
   handleSubmit,
   formState: { errors },
   getValues,
+  watch,
  } = useForm()
+ const selectedImage = watch("image")
 
  const { user: authUser, isAuthenticated, isLoading } = useAuthUser()
  const navigate = useNavigate()
@@ -28,8 +31,13 @@ function Profile() {
  )
 
  function onSubmit(data) {
+  if (selectedImage && selectedImage?.[0]?.type !== "image/jpeg") {
+   toast.error("Please provide a JPEG image")
+   return
+  }
+
   const image =
-   data?.image && data.image.length > 0 ? data.image[0] : user[0].image
+   data.image && data.image.length > 0 ? data.image[0] : user[0].image
   const username = data?.username || user[0].username
   const password = data.newPassword || null
 
@@ -51,10 +59,18 @@ function Profile() {
 
      <div className="flex flex-col gap-5 ">
       <div className="flex items-center gap-4">
-       <div className="w-1/4">
-        <img src={user?.[0]?.image} alt="" className="w-full rounded-full" />
+       <div className="w-1/2  flex justify-center ">
+        <img
+         src={
+          selectedImage
+           ? URL.createObjectURL(selectedImage?.[0])
+           : user?.[0]?.image
+         }
+         alt="profile picture"
+         className="w-20 h-20 rounded-full "
+        />
        </div>
-       <input type="file" {...register("image")} />
+       <input type="file" accept="image/jpeg" {...register("image")} />
       </div>
 
       <div className="flex flex-col">

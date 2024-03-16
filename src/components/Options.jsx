@@ -9,7 +9,7 @@ import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 import { MdDeleteOutline } from "react-icons/md"
 
-export function Options({ isHover, id, pinned }) {
+export function Options({ isHover, id, pinned, setSelectedColor }) {
  const { deleteNote } = useDeleteNote()
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
@@ -48,7 +48,11 @@ export function Options({ isHover, id, pinned }) {
    </div>
 
    {isPickerOpen === id && (
-    <ColorPicker setIsPickerOpen={setIsPickerOpen} id={id} />
+    <ColorPicker
+     setIsPickerOpen={setIsPickerOpen}
+     id={id}
+     setSelectedColor={setSelectedColor}
+    />
    )}
   </div>
  )
