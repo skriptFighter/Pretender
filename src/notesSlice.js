@@ -5,7 +5,7 @@ const initialState = {
  currentNote: null,
  search: [],
  isGridView: true,
- isModal: false,
+ //  isModal: false,
 }
 
 export const notesSlice = createSlice({
@@ -41,9 +41,9 @@ export const notesSlice = createSlice({
    state.isGridView = !state.isGridView
   },
 
-  setModal: (state, action) => {
-   state.isModal = action.payload
-  },
+  // setModal: (state, action) => {
+  //  state.isModal = action.payload
+  // },
  },
 })
 

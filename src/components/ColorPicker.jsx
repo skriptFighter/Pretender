@@ -19,7 +19,7 @@ function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
 
  const handleColorChange = (color) => {
   setIsPickerOpen(null)
-  id ? updateBgColor({ color, id }) : setSelectedColor(color)
+  setSelectedColor ? setSelectedColor(color) : updateBgColor({ color, id })
  }
 
  return (

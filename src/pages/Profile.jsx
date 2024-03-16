@@ -31,13 +31,13 @@ function Profile() {
  )
 
  function onSubmit(data) {
-  if (selectedImage?.[0]?.type !== "image/jpeg") {
+  if (selectedImage && selectedImage?.[0]?.type !== "image/jpeg") {
    toast.error("Please provide a JPEG image")
    return
   }
 
   const image =
-   selectedImage && selectedImage.length > 0 ? selectedImage[0] : user[0].image
+   data.image && data.image.length > 0 ? data.image[0] : user[0].image
   const username = data?.username || user[0].username
   const password = data.newPassword || null
 
