@@ -17,7 +17,7 @@ function Note({ title, content, id, pinned, bgColor, image }) {
   >
    <Link to={`/note/${id}`} onClick={() => dispatch(setCurrentNote(id))}>
     {image && (
-     <div className="rounded-t-2xl">
+     <div className="rounded-t-2xl cursor-default">
       <img
        src={image}
        alt="noteImage"

@@ -27,6 +27,7 @@ function AddNote() {
   addNote({ ...data, pinned: isPinned, bgColor: selectedColor })
   reset()
   setIsActive(false)
+  setSelectedColor(null)
  }
 
  return (
