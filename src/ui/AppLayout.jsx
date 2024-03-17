@@ -7,9 +7,9 @@ function AppLayout() {
   <div className="mx-auto overflow-x-hidden">
    <Header />
 
-   <div className="mb-10" />
+   <div className="mb-6" />
 
-   <main className="flex gap-10">
+   <main className="flex gap-10 ">
     <Sidebar />
     <Outlet />
    </main>

@@ -18,10 +18,10 @@ function Header() {
  const { username, image } = user?.[0] || {}
 
  const dispatch = useDispatch()
- const isGridView = useSelector(selectIsGrid)
+ const isGrid = useSelector(selectIsGrid)
 
  return (
-  <div className="flex justify-between items-center p-5">
+  <div className="flex justify-between items-center p-5 border-b-2 py-8 ">
    <Item>
     <IoIosMenu fontSize={27} />
    </Item>
@@ -36,10 +36,10 @@ function Header() {
     <p>{username}</p>
 
     <Item onClick={() => dispatch(setGridView())}>
-     {isGridView ? (
-      <IoGridOutline fontSize={27} className="p-1" />
-     ) : (
+     {isGrid ? (
       <TfiViewList fontSize={27} className="p-1" />
+     ) : (
+      <IoGridOutline fontSize={27} className="p-1" />
      )}
     </Item>
 

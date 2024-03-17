@@ -17,7 +17,7 @@ import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
-import ModalNote from "./pages/ModalNote"
+import ModalNote from "./ui/ModalNote"
 
 export default function App() {
  const router = createBrowserRouter(
