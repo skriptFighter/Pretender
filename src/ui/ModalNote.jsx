@@ -5,18 +5,16 @@ import Button from "../components/Button"
 
 import { VscPinned } from "react-icons/vsc"
 import { TbPinnedFilled } from "react-icons/tb"
-import { FaRegBell } from "react-icons/fa"
-import { CiImageOn } from "react-icons/ci"
-import { LuPaintbrush } from "react-icons/lu"
 
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
-import ColorPicker from "../components/ColorPicker"
+
 import { useUpdateNote } from "../hooks/useUpdateNote"
 import { useDispatch, useSelector } from "react-redux"
 import { selectCurrentNote, setCurrentNote, setNotes } from "../notesSlice"
 import { useNotes } from "../hooks/useNotes"
+import ModalNoteOptions from "./ModalNoteOptions"
 
 function ModalNote() {
  const { notes } = useNotes()
@@ -91,43 +89,13 @@ function ModalNote() {
      />
 
      <div className="px-2 grid grid-cols-2">
-      <Options setSelectedColor={setSelectedColor} />
+      <ModalNoteOptions setSelectedColor={setSelectedColor} />
       <Button type={"submit"} primary={true}>
        Save
       </Button>
      </div>
     </form>
    </div>
-  </div>
- )
-}
-
-function Options({ setSelectedColor }) {
- const [isPickerOpen, setIsPickerOpen] = useState(false)
-
- return (
-  <div className="flex gap-8 items-center ">
-   <div className="cursor-pointer hover:bg-gray-200 flex items-center p-2 rounded-full">
-    <CiImageOn fontSize={18} />
-   </div>
-
-   <div className="cursor-pointer hover:bg-gray-200 flex items-center p-2 rounded-full">
-    <FaRegBell fontSize={18} />
-   </div>
-
-   <div
-    className="cursor-pointer hover:bg-gray-200 flex items-center p-2 rounded-full"
-    onClick={() => setIsPickerOpen(true)}
-   >
-    <LuPaintbrush fontSize={18} />
-   </div>
-
-   {isPickerOpen && (
-    <ColorPicker
-     setIsPickerOpen={setIsPickerOpen}
-     setSelectedColor={setSelectedColor}
-    />
-   )}
   </div>
  )
 }

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Options } from "./Options"
+import { NoteOptions } from "./NoteOptions"
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setCurrentNote } from "../notesSlice"
@@ -42,7 +42,7 @@ function Note({ title, content, id, pinned, bgColor, image }) {
     className="rounded-b-2xl "
     style={{ backgroundColor: selectedColor || bgColor }}
    >
-    <Options
+    <NoteOptions
      isHover={isHover}
      id={id}
      pinned={pinned}
