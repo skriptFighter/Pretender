@@ -8,11 +8,14 @@ import { VscPinned } from "react-icons/vsc"
 import { CiImageOn } from "react-icons/ci"
 import { LuPaintbrush } from "react-icons/lu"
 import { MdDeleteOutline } from "react-icons/md"
+import { useSelector } from "react-redux"
+import { selectIsGrid } from "../notesSlice"
 
 export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
  const { deleteNote } = useDeleteNote()
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
+ const isGrid = useSelector(selectIsGrid)
 
  function togglePick(id) {
   setIsPickerOpen(isPickerOpen === id ? null : id)
@@ -21,7 +24,7 @@ export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
  return (
   <div className="relative">
    <div
-    className={`px-2 flex justify-between items-center transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
+    className={`${isGrid ? "px-2 justify-between items-center" : "px-4 justify-start gap-8"} flex transition-all duration-300 opacity-0 ${isHover && "opacity-100"}`}
    >
     <Button
      header={true}

@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { NoteOptions } from "./NoteOptions"
 import { Link } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { setCurrentNote } from "../notesSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { selectIsGrid, setCurrentNote } from "../notesSlice"
 
 function Note({ title, content, id, pinned, bgColor, image }) {
  const [isHover, setIsHover] = useState(false)
  const [selectedColor, setSelectedColor] = useState(null)
+ const isGrid = useSelector(selectIsGrid)
 
  const dispatch = useDispatch()
 
@@ -14,8 +15,10 @@ function Note({ title, content, id, pinned, bgColor, image }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col w-56 rounded-2xl shadow-md transition-shadow duration-300  dark:shadow-sm dark:shadow-slate-800 self-start `}
-   style={{ border: `solid 1px ${selectedColor || bgColor}` }}
+   className={`flex flex-col rounded-2xl shadow-md transition-shadow duration-300  dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "w-56 self-start" : "w-1/3"} `}
+   style={{
+    border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
+   }}
   >
    <Link to={`/note/${id}`} onClick={() => dispatch(setCurrentNote(id))}>
     {image && (

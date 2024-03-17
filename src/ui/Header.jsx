@@ -21,7 +21,7 @@ function Header() {
  const isGridView = useSelector(selectIsGrid)
 
  return (
-  <div className="flex justify-between items-center p-5">
+  <div className="flex justify-between items-center p-5 border-b-2 py-8">
    <Item>
     <IoIosMenu fontSize={27} />
    </Item>

@@ -23,7 +23,7 @@ function AddNote() {
  const selectedImage = watch("image")
 
  function onSubmit(data) {
-  if (selectedImage?.type !== "image/jpeg") {
+  if (selectedImage && selectedImage.type !== "image/jpeg") {
    toast.error("Please provide a JPEG image")
    return
   }
