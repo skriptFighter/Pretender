@@ -9,6 +9,9 @@ function Note({ title, content, id, pinned, bgColor, image }) {
  const [selectedColor, setSelectedColor] = useState(null)
  const isGrid = useSelector(selectIsGrid)
 
+ const imageValid = image && typeof image === "string"
+ const imageLoading = image && typeof image === "object"
+
  const dispatch = useDispatch()
 
  return (
@@ -21,16 +24,17 @@ function Note({ title, content, id, pinned, bgColor, image }) {
    }}
   >
    <Link to={`/note/${id}`} onClick={() => dispatch(setCurrentNote(id))}>
-    {image && (
+    {imageValid && (
      <div className="rounded-t-2xl cursor-default">
       <img
        loading="lazy"
        src={image}
-       alt="noteImage"
        className="w-full object-contain rounded-t-2xl"
       />
      </div>
     )}
+
+    {imageLoading && <p>loading</p>}
 
     <div
      className={`${!image && "rounded-t-2xl"} px-4 pt-8 flex flex-col gap-2 cursor-default`}
@@ -48,6 +52,7 @@ function Note({ title, content, id, pinned, bgColor, image }) {
     <NoteOptions
      isHover={isHover}
      id={id}
+     image={image}
      pinned={pinned}
      setSelectedColor={setSelectedColor}
     />

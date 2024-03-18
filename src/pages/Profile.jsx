@@ -1,14 +1,17 @@
 import { useForm } from "react-hook-form"
-import { useAuthUser } from "../hooks/useAuthUser"
-import { useEditProfile } from "../hooks/useEditProfile"
-import { useUserInfos } from "../hooks/useUserInfos"
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import Button from "../components/Button"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
+
+import { useEffect } from "react"
+import Button from "../components/Button"
+
+import { useAuthUser } from "../hooks/useAuthUser"
+import { useUserInfos } from "../hooks/useUserInfos"
+import { useEditProfile } from "../hooks/useEditProfile"
 
 function Profile() {
  const { editProfile } = useEditProfile()
+
  const { user } = useUserInfos()
 
  const {
@@ -40,8 +43,10 @@ function Profile() {
    data.image && data.image.length > 0 ? data.image[0] : user[0].image
   const username = data?.username || user[0].username
   const password = data.newPassword || null
+  const oldImage = user?.[0]?.image
 
   editProfile({
+   oldImage: oldImage,
    user: { username, image },
    password,
    id: authUser.id,

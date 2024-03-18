@@ -11,7 +11,7 @@ import { MdDeleteOutline } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { selectIsGrid } from "../notesSlice"
 
-export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
+export function NoteOptions({ isHover, id, pinned, setSelectedColor, image }) {
  const { deleteNote } = useDeleteNote()
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
@@ -45,7 +45,7 @@ export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
      <LuPaintbrush fontSize={20} cursor={"pointer"} />
     </Button>
 
-    <Button header={true} onClick={() => deleteNote(id)}>
+    <Button header={true} onClick={() => deleteNote({ id, image })}>
      <MdDeleteOutline fontSize={20} cursor={"pointer"} />
     </Button>
    </div>
