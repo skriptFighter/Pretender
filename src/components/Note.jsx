@@ -52,6 +52,7 @@ function Note({ title, content, id, pinned, bgColor, image }) {
     <NoteOptions
      isHover={isHover}
      id={id}
+     image={image}
      pinned={pinned}
      setSelectedColor={setSelectedColor}
     />

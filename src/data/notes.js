@@ -55,10 +55,20 @@ export async function addNote(note) {
  }
 }
 
-export async function deleteNote(id) {
+export async function deleteNote(id, image) {
  const { error } = await supabase.from("notes").delete().eq("id", id)
-
  if (error) throw new Error(error.message)
+
+ if (image) {
+  const imageName = image.split(
+   "https://oysvpfovjeritgijrphg.supabase.co/storage/v1/object/public/notesImages/"
+  )
+
+  const { error: storageError } = await supabase.storage
+   .from("notesImages")
+   .remove(imageName[1])
+  if (storageError) throw new Error(storageError.message)
+ }
 }
 
 export async function updatePinned(isPinned, id) {

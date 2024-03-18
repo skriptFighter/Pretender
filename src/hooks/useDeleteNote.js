@@ -6,10 +6,15 @@ export function useDeleteNote() {
  const queryClient = useQueryClient()
 
  const { mutate: deleteNote } = useMutation({
-  mutationFn: deleteNoteApi,
+  mutationFn: (data) => {
+   const { id, image } = data
+   deleteNoteApi(id, image)
+  },
+
   onSuccess: () => {
    queryClient.invalidateQueries(["notes"])
   },
+
   onError: (err) => {
    toast.error(err.message)
   },
