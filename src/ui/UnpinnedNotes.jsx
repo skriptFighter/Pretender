@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import Note from "../components/Note"
 import { selectIsGrid, selectSearch } from "../notesSlice"
+import { useMemo } from "react"
 
 function UnpinnedNotes() {
  const notes = useSelector(selectSearch)
@@ -13,19 +14,24 @@ function UnpinnedNotes() {
     className={`flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-2 " : " flex-col gap-12 items-center"}`}
    >
     {isGrid || <p>Others</p>}
-    {notes
-     ?.filter((note) => note?.pinned === false)
-     ?.map((note) => (
-      <Note
-       title={note?.title}
-       content={note?.content}
-       key={note.id}
-       id={note?.id}
-       pinned={note?.pinned}
-       bgColor={note?.bgColor}
-       image={note?.image}
-      />
-     ))}
+    {useMemo(
+     function () {
+      return notes
+       .filter((note) => !note?.pinned && !note?.deleted)
+       .map((note) => (
+        <Note
+         title={note?.title}
+         content={note?.content}
+         key={note.id}
+         id={note?.id}
+         pinned={note?.pinned}
+         bgColor={note?.bgColor}
+         image={note?.image}
+        />
+       ))
+     },
+     [notes]
+    )}
    </div>
   </>
  )

@@ -18,6 +18,7 @@ import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
 import ModalNote from "./ui/ModalNote"
+import DeletedNotes from "./pages/Trash"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -33,6 +34,7 @@ export default function App() {
     >
      <Route index element={<Dashboard />} />
      <Route path="/note/:id" element={<ModalNote />} />
+     <Route path="trash" element={<DeletedNotes />} />
     </Route>
 
     <Route path="profile" element={<Profile />} />

@@ -32,6 +32,7 @@ function AddNote() {
   reset()
   setIsActive(false)
   setSelectedColor(null)
+  setIsPinned(false)
  }
 
  return (
