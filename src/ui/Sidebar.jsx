@@ -8,7 +8,11 @@ function Sidebar() {
   <div className="flex flex-col h-full min-w-64 ">
    <Item icon={<FaRegStickyNote fontSize={23} />} label={"Notes"} />
    <Item icon={<FaRegBell fontSize={23} />} label={"Reminders"} />
-   <Item icon={<MdDeleteOutline fontSize={28} />} label={"Trash"} />
+   <Item
+    icon={<MdDeleteOutline fontSize={28} />}
+    label={"Trash"}
+    to={"/trash"}
+   />
   </div>
  )
 }

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useDeleteNote } from "../hooks/useDeleteNote"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "./ColorPicker"
 import Button from "./Button"
@@ -10,12 +9,19 @@ import { LuPaintbrush } from "react-icons/lu"
 import { MdDeleteOutline } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { selectIsGrid } from "../notesSlice"
+import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-export function NoteOptions({ isHover, id, pinned, setSelectedColor, image }) {
- const { deleteNote } = useDeleteNote()
+export function NoteOptions({
+ isHover,
+ id,
+ pinned,
+ setSelectedColor,
+ deleted,
+}) {
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
  const isGrid = useSelector(selectIsGrid)
+ const { updateTrash } = useUpdateTrash()
 
  function togglePick(id) {
   setIsPickerOpen(isPickerOpen === id ? null : id)
@@ -45,7 +51,7 @@ export function NoteOptions({ isHover, id, pinned, setSelectedColor, image }) {
      <LuPaintbrush fontSize={20} cursor={"pointer"} />
     </Button>
 
-    <Button header={true} onClick={() => deleteNote({ id, image })}>
+    <Button header={true} onClick={() => updateTrash({ id, deleted })}>
      <MdDeleteOutline fontSize={20} cursor={"pointer"} />
     </Button>
    </div>
