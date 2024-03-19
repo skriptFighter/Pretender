@@ -34,7 +34,15 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
      </div>
     )}
 
-    {imageLoading && <p>loading</p>}
+    {imageLoading && (
+     <div className="rounded-t-2xl cursor-default">
+      <img
+       loading="lazy"
+       src={URL.createObjectURL(image)}
+       className="w-full object-contain rounded-t-2xl"
+      />
+     </div>
+    )}
 
     <div
      className={`${!image && "rounded-t-2xl"} px-4 pt-8 flex flex-col gap-2 cursor-default`}
