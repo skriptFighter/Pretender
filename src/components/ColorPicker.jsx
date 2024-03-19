@@ -17,9 +17,16 @@ function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
  const { updateBgColor } = useUpdateBgColor()
  const ref = useClickOutside(() => setIsPickerOpen(null))
 
+ function updateWithSelected({ color, id }) {
+  setSelectedColor(color)
+  updateBgColor({ color, id })
+ }
+
  const handleColorChange = (color) => {
   setIsPickerOpen(null)
-  setSelectedColor ? setSelectedColor(color) : updateBgColor({ color, id })
+  setSelectedColor
+   ? updateWithSelected({ color, id })
+   : updateBgColor({ color, id })
  }
 
  return (

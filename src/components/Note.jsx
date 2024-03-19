@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectIsGrid, setCurrentNote } from "../notesSlice"
 
-function Note({ title, content, id, pinned, bgColor, image }) {
+function Note({ title, content, id, pinned, bgColor, image, deleted }) {
  const [isHover, setIsHover] = useState(false)
  const [selectedColor, setSelectedColor] = useState(null)
  const isGrid = useSelector(selectIsGrid)
@@ -55,6 +55,7 @@ function Note({ title, content, id, pinned, bgColor, image }) {
      image={image}
      pinned={pinned}
      setSelectedColor={setSelectedColor}
+     deleted={deleted}
     />
    </div>
   </div>

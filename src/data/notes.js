@@ -90,10 +90,10 @@ export async function updateBgColor(color, id) {
  return data
 }
 
-export async function moveToTrash(id) {
+export async function updateTrash({ id, deleted }) {
  const { data, error } = await supabase
   .from("notes")
-  .update({ deleted: true })
+  .update({ deleted: !deleted })
   .eq("id", id)
 
  if (error) throw new Error(error.message)

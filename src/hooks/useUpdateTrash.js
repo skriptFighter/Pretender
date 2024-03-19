@@ -1,18 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { moveToTrash as moveToTrashApi } from "../data/notes"
+import { updateTrash as updateTrashApi } from "../data/notes"
 import toast from "react-hot-toast"
 
-export function useMoveToTrash() {
+export function useUpdateTrash() {
  const queryClient = useQueryClient()
 
- const { mutate: moveToTrash } = useMutation({
-  mutationFn: moveToTrashApi,
-  onMutate: async (id) => {
+ const { mutate: updateTrash } = useMutation({
+  mutationFn: updateTrashApi,
+  onMutate: async (data) => {
+   const { id, deleted } = data
+
    await queryClient.cancelQueries(["notes"])
    const previousNotes = queryClient.getQueryData(["notes"])
    queryClient.setQueryData(["notes"], (oldNotes) => {
     return oldNotes.map((note) =>
-     note.id === id ? { ...note, deleted: true } : note
+     note.id === id ? { ...note, deleted: !deleted } : note
     )
    })
    return { previousNotes }
@@ -25,5 +27,5 @@ export function useMoveToTrash() {
   },
  })
 
- return { moveToTrash }
+ return { updateTrash }
 }

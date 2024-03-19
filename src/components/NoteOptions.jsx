@@ -9,13 +9,19 @@ import { LuPaintbrush } from "react-icons/lu"
 import { MdDeleteOutline } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { selectIsGrid } from "../notesSlice"
-import { useMoveToTrash } from "../hooks/useMoveToTrash"
+import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
+export function NoteOptions({
+ isHover,
+ id,
+ pinned,
+ setSelectedColor,
+ deleted,
+}) {
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
  const isGrid = useSelector(selectIsGrid)
- const { moveToTrash } = useMoveToTrash()
+ const { updateTrash } = useUpdateTrash()
 
  function togglePick(id) {
   setIsPickerOpen(isPickerOpen === id ? null : id)
@@ -45,7 +51,7 @@ export function NoteOptions({ isHover, id, pinned, setSelectedColor }) {
      <LuPaintbrush fontSize={20} cursor={"pointer"} />
     </Button>
 
-    <Button header={true} onClick={() => moveToTrash(id)}>
+    <Button header={true} onClick={() => updateTrash({ id, deleted })}>
      <MdDeleteOutline fontSize={20} cursor={"pointer"} />
     </Button>
    </div>
