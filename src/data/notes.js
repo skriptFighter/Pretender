@@ -101,12 +101,29 @@ export async function updateTrash({ id, deleted }) {
 }
 
 export async function updateNote(note) {
- const { data, error } = await supabase
-  .from("notes")
-  .update({ ...note })
-  .eq("id", note.id)
+ if (note?.image) {
+  const hasImagePath = note.image?.startsWith?.(supabaseUrl)
+  const imageName = `${Math.random()}-${note.image.name}`.replaceAll("/", "")
+  const imagePath = hasImagePath
+   ? note.image
+   : `${supabaseUrl}/storage/v1/object/public/notesImages/${imageName}`
 
- if (error) throw new Error(error.message)
+  const { data, error } = await supabase
+   .from("notes")
+   .update({ ...note, image: imagePath })
+   .eq("id", note.id)
 
- return data
+  if (error) throw new Error(error.message)
+
+  await supabase.storage.from("notesImages").upload(imageName, note.image)
+  return data
+ } else {
+  const { data, error } = await supabase
+   .from("notes")
+   .update({ ...note })
+   .eq("id", note.id)
+
+  if (error) throw new Error(error.message)
+  return data
+ }
 }

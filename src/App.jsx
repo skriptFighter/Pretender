@@ -33,7 +33,14 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
-     <Route path="/note/:id" element={<ModalNote />} />
+     <Route
+      path="/:id"
+      element={
+       <Dashboard>
+        <ModalNote />
+       </Dashboard>
+      }
+     />
      <Route path="trash" element={<DeletedNotes />} />
     </Route>
 

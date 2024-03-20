@@ -2,15 +2,17 @@ import { useEffect } from "react"
 import { useNotes } from "../hooks/useNotes"
 
 import AddNote from "../ui/AddNote"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
-import { setNotes, setSearchValue } from "../notesSlice"
+import { selectModal, setNotes, setSearchValue } from "../notesSlice"
 import PinnedNotes from "../ui/PinnedNotes"
 import UnpinnedNotes from "../ui/UnpinnedNotes"
+import ModalNote from "../ui/ModalNote"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
  const dispatch = useDispatch()
+ const isModal = useSelector(selectModal)
 
  useEffect(() => {
   if (notes) {
@@ -28,6 +30,7 @@ function Dashboard() {
 
    <PinnedNotes />
    <UnpinnedNotes />
+   {isModal && <ModalNote />}
   </div>
  )
 }
