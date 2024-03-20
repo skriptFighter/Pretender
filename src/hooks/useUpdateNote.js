@@ -7,7 +7,6 @@ export function useUpdateNote() {
 
  const { mutate: updateNote } = useMutation({
   mutationFn: updateNoteApi,
-
   onSuccess: () => {
    queryClient.invalidateQueries(["notes"])
   },

@@ -2,17 +2,22 @@ import { useState } from "react"
 import { NoteOptions } from "./NoteOptions"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { selectIsGrid, setCurrentNote } from "../notesSlice"
+import { selectIsGrid, setCurrentNote, setModal } from "../notesSlice"
 
 function Note({ title, content, id, pinned, bgColor, image, deleted }) {
  const [isHover, setIsHover] = useState(false)
  const [selectedColor, setSelectedColor] = useState(null)
+ const dispatch = useDispatch()
+
  const isGrid = useSelector(selectIsGrid)
 
  const imageValid = image && typeof image === "string"
  const imageLoading = image && typeof image === "object"
 
- const dispatch = useDispatch()
+ function handleClick() {
+  dispatch(setCurrentNote(id))
+  dispatch(setModal(true))
+ }
 
  return (
   <div
@@ -23,13 +28,13 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
     border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
    }}
   >
-   <Link to={`/note/${id}`} onClick={() => dispatch(setCurrentNote(id))}>
+   <Link to={`${id}`} onClick={handleClick}>
     {imageValid && (
      <div className="rounded-t-2xl cursor-default">
       <img
        loading="lazy"
        src={image}
-       className="w-full object-contain rounded-t-2xl"
+       className="w-full object-contain rounded-t-2xl max-h-96"
       />
      </div>
     )}
@@ -39,7 +44,7 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
       <img
        loading="lazy"
        src={URL.createObjectURL(image)}
-       className="w-full object-contain rounded-t-2xl"
+       className="w-full object-contain rounded-t-2xl max-h-96"
       />
      </div>
     )}
