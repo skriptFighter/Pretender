@@ -16,7 +16,7 @@ function Dark() {
   <Button
    onClick={() => dark()}
    round={true}
-   className={"absolute bottom-3 left-3"}
+   className={"fixed bottom-3 left-3 "}
   >
    {isDark ? <MdSunny /> : <FaMoon />}
   </Button>
