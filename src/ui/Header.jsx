@@ -21,7 +21,7 @@ function Header() {
  const isGrid = useSelector(selectIsGrid)
 
  return (
-  <div className="flex justify-between items-center p-5 border-b-2 py-8 ">
+  <div className="flex w-full bg-white justify-between items-center p-5 border-b-2 py-8 fixed top-0 dark:bg-black">
    <Item>
     <IoIosMenu fontSize={27} />
    </Item>

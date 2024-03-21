@@ -9,11 +9,11 @@ function Trash() {
  const isGrid = useSelector(selectIsGrid)
 
  return (
-  <div className="flex flex-col gap-20">
+  <div className="flex flex-col gap-20 ml-72 mt-36">
    <Button primary={true}>Delete all</Button>
 
    <div
-    className={`flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-2 " : " flex-col gap-12 items-center"}`}
+    className={` flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-2 " : " flex-col gap-12 items-center"}`}
    >
     {notes
      ?.filter((note) => note?.deleted)

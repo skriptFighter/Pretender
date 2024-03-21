@@ -12,7 +12,12 @@ import TextareaAutosize from "react-textarea-autosize"
 
 import { useUpdateNote } from "../hooks/useUpdateNote"
 import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentNote, setModal, setNotes } from "../notesSlice"
+import {
+ selectCurrentNote,
+ setCurrentNote,
+ setModal,
+ setNotes,
+} from "../notesSlice"
 import { useNotes } from "../hooks/useNotes"
 import ModalNoteOptions from "./ModalNoteOptions"
 import { createPortal } from "react-dom"
@@ -28,26 +33,28 @@ function ModalNote() {
   dispatch(setModal(false))
  })
 
+ const currentNote = useSelector(selectCurrentNote)
  const { id } = useParams()
 
  useEffect(
   function () {
    if (notes) {
     dispatch(setNotes(notes))
+    dispatch(setCurrentNote(id))
    }
   },
-  [dispatch, notes]
+  [dispatch, notes, id]
  )
-
- const currentNote = useSelector(selectCurrentNote)
 
  const { handleSubmit, register, setValue, watch } = useForm()
  const { updateNote } = useUpdateNote()
 
  const [selectedColor, setSelectedColor] = useState(currentNote?.bgColor)
  const [isPinned, setIsPinned] = useState(currentNote?.pinned)
+ //BUG isPinned init state
 
  const selectedImage = watch("image")
+
  function onSubmit(data) {
   if (selectedImage && selectedImage.type !== "image/jpeg") {
    toast.error("Please provide a JPEG image")
@@ -56,7 +63,6 @@ function ModalNote() {
   const image = selectedImage || currentNote.image
 
   updateNote({ ...data, pinned: isPinned, bgColor: selectedColor, id, image })
-  // console.log({ ...data, pinned: isPinned, bgColor: selectedColor, id, image })
   navigate("/")
   dispatch(setModal(false))
  }
