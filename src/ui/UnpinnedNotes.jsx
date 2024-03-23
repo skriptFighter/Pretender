@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import Note from "../components/Note"
+import Note from "./Note"
 import { selectIsGrid, selectSearch } from "../notesSlice"
 import { useMemo } from "react"
 
@@ -11,7 +11,7 @@ function UnpinnedNotes() {
   <>
    {isGrid && <p>Others</p>}
    <div
-    className={`flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-2 " : " flex-col gap-12 items-center"}`}
+    className={`flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-2 " : " flex-col items-center gap-12"}`}
    >
     {isGrid || <p>Others</p>}
     {useMemo(

@@ -17,7 +17,6 @@ import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
-import ModalNote from "./ui/ModalNote"
 import DeletedNotes from "./pages/Trash"
 
 export default function App() {
@@ -33,7 +32,6 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
-     <Route path="/:id" element={<ModalNote />} />
      <Route path="trash" element={<DeletedNotes />} />
     </Route>
 

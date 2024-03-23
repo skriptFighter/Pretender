@@ -10,11 +10,11 @@ function SearchBar() {
  }
 
  return (
-  <div className="flex items-center pl-2 shadow-zinc-700 shadow-sm rounded-lg w-1/4 focus:w-1/2 focus-within:w-1/2 transition-all duration-300">
+  <div className="flex w-1/4  items-center rounded-xl bg-secondary pl-2 transition-all duration-300 focus-within:w-1/2 focus:w-1/2 focus:bg-primary dark:bg-secondaryDark focus:dark:bg-primaryDark">
    <IoIosSearch fontSize={23} className="cursor-pointer" />
    <input
     type="text"
-    className="outline-none dark:bg-black w-full p-2"
+    className="w-full bg-secondary p-4 outline-none transition-all duration-300 focus:bg-primary dark:bg-secondaryDark focus:dark:bg-primaryDark"
     onChange={handleChange}
    />
   </div>

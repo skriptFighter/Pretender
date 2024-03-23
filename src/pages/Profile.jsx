@@ -54,8 +54,8 @@ function Profile() {
  }
 
  return (
-  <div className="w-1/4 mx-auto flex justify-center items-center h-screen">
-   <div className=" bg-zinc-100 py-12 px-8 rounded-lg outline-black shadow-xl">
+  <div className="mx-auto flex h-screen w-1/4 items-center justify-center">
+   <div className=" rounded-lg bg-zinc-100 px-8 py-12 shadow-xl outline-black">
     <form onSubmit={handleSubmit(onSubmit)}>
      <div className="mb-8">
       <h1 className="text-xl font-semibold">Profile</h1>
@@ -64,7 +64,7 @@ function Profile() {
 
      <div className="flex flex-col gap-5 ">
       <div className="flex items-center gap-4">
-       <div className="w-1/2  flex justify-center ">
+       <div className="flex  w-1/2 justify-center ">
         <img
          src={
           selectedImage
@@ -72,7 +72,7 @@ function Profile() {
            : user?.[0]?.image
          }
          alt="profile picture"
-         className="w-20 h-20 rounded-full "
+         className="h-20 w-20 rounded-full "
         />
        </div>
        <input type="file" accept="image/jpeg" {...register("image")} />

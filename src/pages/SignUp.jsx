@@ -26,10 +26,10 @@ function SignUp() {
  return (
   <form
    onSubmit={handleSubmit(onSubmit)}
-   className="flex flex-col gap-8 sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 bg-neutral-200 dark:bg-zinc-950 px-4 py-8 rounded-lg"
+   className="flex flex-col gap-8 rounded-lg bg-neutral-200 px-4 py-8 dark:bg-zinc-950 sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4"
   >
    <div>
-    <h1 className="text-lg sm:text-lg md:text-xl lg:text-2xl font-bold text-center">
+    <h1 className="text-center text-lg font-bold sm:text-lg md:text-xl lg:text-2xl">
      Create an account
     </h1>
    </div>
@@ -96,7 +96,7 @@ function SignUp() {
     </Button>
    </div>
 
-   <p className="text-center text-sm sm:text-md">
+   <p className="sm:text-md text-center text-sm">
     Already have an account?
     <Link to={"/login"} className="font-semibold underline ">
      Login

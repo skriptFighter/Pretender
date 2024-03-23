@@ -1,19 +1,12 @@
 import { Outlet } from "react-router-dom"
-import Header from "./Header"
 import Sidebar from "./Sidebar"
 
 function AppLayout() {
  return (
-  <div className="mx-auto overflow-x-hidden">
-   <Header />
-
-   <div className="mb-6" />
-
-   <main className="flex gap-10 ">
-    <Sidebar />
-    <Outlet />
-   </main>
-  </div>
+  <main className="mx-auto flex gap-10 overflow-x-hidden pt-10">
+   <Sidebar />
+   <Outlet />
+  </main>
  )
 }
 
