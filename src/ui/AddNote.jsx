@@ -6,7 +6,6 @@ import { TbPinnedFilled } from "react-icons/tb"
 import { useForm } from "react-hook-form"
 import { useAddNote } from "../hooks/useAddNote"
 import TextareaAutosize from "react-textarea-autosize"
-// import { useClickOutside } from "../hooks/useClickOutside"
 import toast from "react-hot-toast"
 
 import { FaRegBell } from "react-icons/fa"
@@ -15,10 +14,14 @@ import { LuPaintbrush } from "react-icons/lu"
 
 import ColorPicker from "../components/ColorPicker"
 import { useRef, useState } from "react"
+import { setModal } from "../notesSlice"
+import { useDispatch } from "react-redux"
 
 function AddNote() {
  const [isPinned, setIsPinned] = useState(false)
  const [selectedColor, setSelectedColor] = useState()
+
+ const dispatch = useDispatch()
 
  const { addNote } = useAddNote()
  const { handleSubmit, register, reset, setValue, watch } = useForm()
@@ -35,6 +38,7 @@ function AddNote() {
   reset()
   setSelectedColor(null)
   setIsPinned(false)
+  dispatch(setModal(false))
  }
 
  return (

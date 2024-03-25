@@ -13,21 +13,23 @@ function AllNotes() {
 
  return (
   <>
-   <div className="flex w-full flex-wrap gap-x-10 gap-y-2 border-b-2 pb-6 pr-6">
+   <div className="flex w-full flex-wrap gap-x-10 gap-y-2 pb-6 pr-6">
     {useMemo(
      function () {
-      return notes.map((note) => (
-       <Note
-        title={note?.title}
-        content={note?.content}
-        key={note.id}
-        id={note?.id}
-        pinned={note?.pinned}
-        bgColor={note?.bgColor}
-        image={note?.image}
-        deleted={note?.deleted}
-       />
-      ))
+      return notes
+       .filter((note) => !note.deleted && !note.pinned)
+       .map((note) => (
+        <Note
+         title={note?.title}
+         content={note?.content}
+         key={note.id}
+         id={note?.id}
+         pinned={note?.pinned}
+         bgColor={note?.bgColor}
+         image={note?.image}
+         deleted={note?.deleted}
+        />
+       ))
      },
      [notes]
     )}

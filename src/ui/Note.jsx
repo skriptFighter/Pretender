@@ -89,7 +89,7 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
  const isGrid = useSelector(selectIsGrid)
  const { updateTrash } = useUpdateTrash()
 
- function togglePick(id) {
+ function togglePicker(id) {
   setIsPickerOpen(isPickerOpen === id ? null : id)
  }
 
@@ -113,7 +113,7 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
      <CiImageOn fontSize={20} cursor={"pointer"} />
     </Button>
 
-    <Button header={true} onClick={() => togglePick(id)}>
+    <Button header={true} onClick={() => togglePicker(id)}>
      <LuPaintbrush fontSize={20} cursor={"pointer"} />
     </Button>
 

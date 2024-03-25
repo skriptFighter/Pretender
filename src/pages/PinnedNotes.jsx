@@ -1,13 +1,22 @@
 import { useDispatch, useSelector } from "react-redux"
-import { selectSearch, setGrid, setNotes, setSearchValue } from "../notesSlice"
+import {
+ selectModal,
+ selectSearch,
+ setGrid,
+ setNotes,
+ setSearchValue,
+} from "../notesSlice"
 import { useEffect } from "react"
 import { useNotes } from "../hooks/useNotes"
 import PinnedNote from "../ui/PinnedNote"
+import Modal from "../components/Modal"
+import CurrentNote from "../ui/CurrentNote"
 
 function PinnedNotes() {
  const dispatch = useDispatch()
  const { notes } = useNotes()
  const searchedNotes = useSelector(selectSearch)
+ const modal = useSelector(selectModal)
 
  useEffect(() => {
   if (notes) {
@@ -16,8 +25,6 @@ function PinnedNotes() {
   }
   dispatch(setGrid(false))
  }, [dispatch, notes])
-
- console.log(searchedNotes?.filter((note) => note?.pinned && !note?.deleted))
 
  return (
   <>
@@ -37,6 +44,12 @@ function PinnedNotes() {
       />
      ))}
    </div>
+
+   {modal === "currentNote" && (
+    <Modal>
+     <CurrentNote />
+    </Modal>
+   )}
   </>
  )
 }

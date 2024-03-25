@@ -16,7 +16,6 @@ function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
  const [selectedColor, setSelectedColor] = useState(null)
  const [isHover, setIsHover] = useState(false)
  const dispatch = useDispatch()
- console.log(setSelectedColor)
 
  function handleClick() {
   dispatch(setCurrentNote(id))
@@ -26,11 +25,10 @@ function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
  return (
   <div
    className="relative flex h-44 w-1/2 gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
-   onClick={handleClick}
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
   >
-   <div className=" w-1/4">
+   <div className=" w-1/4" onClick={handleClick}>
     <img
      loading="lazy"
      src={image}
@@ -41,7 +39,8 @@ function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
 
    <div
     className="flex w-3/4 flex-col rounded-md p-4 pr-14 "
-    style={{ backgroundColor: bgColor }}
+    style={{ backgroundColor: selectedColor || bgColor }}
+    onClick={handleClick}
    >
     <p className="h-10 break-words text-lg font-semibold">{title}</p>
     <p className="h-full overflow-hidden break-words text-lg ">{content}</p>
@@ -51,7 +50,7 @@ function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
     <NoteOptions
      id={id}
      pinned={pinned}
-     setSelectedColor={selectedColor}
+     setSelectedColor={setSelectedColor}
      deleted={deleted}
      isHover={isHover}
     />
@@ -70,33 +69,31 @@ function NoteOptions({ id, pinned, setSelectedColor, deleted, isHover }) {
  }
 
  return (
-  <div className="relative">
-   <div
-    className={`flex flex-col justify-start  px-4 opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
+  <div
+   className={`flex flex-col justify-start  px-4 opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
+  >
+   <Button
+    header={true}
+    onClick={() => updatePinned({ isPinned: !pinned, id })}
    >
-    <Button
-     header={true}
-     onClick={() => updatePinned({ isPinned: !pinned, id })}
-    >
-     {pinned ? (
-      <TbPinnedFilled fontSize={20} cursor={"pointer"} />
-     ) : (
-      <VscPinned fontSize={20} cursor={"pointer"} />
-     )}
-    </Button>
+    {pinned ? (
+     <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+    ) : (
+     <VscPinned fontSize={20} cursor={"pointer"} />
+    )}
+   </Button>
 
-    <Button header={true}>
-     <CiImageOn fontSize={20} cursor={"pointer"} />
-    </Button>
+   <Button header={true}>
+    <CiImageOn fontSize={20} cursor={"pointer"} />
+   </Button>
 
-    <Button header={true} onClick={() => togglePick(id)}>
-     <LuPaintbrush fontSize={20} cursor={"pointer"} />
-    </Button>
+   <Button header={true} onClick={() => togglePick(id)}>
+    <LuPaintbrush fontSize={20} cursor={"pointer"} />
+   </Button>
 
-    <Button header={true} onClick={() => updateTrash({ id, deleted })}>
-     <MdDeleteOutline fontSize={20} cursor={"pointer"} />
-    </Button>
-   </div>
+   <Button header={true} onClick={() => updateTrash({ id, deleted })}>
+    <MdDeleteOutline fontSize={20} cursor={"pointer"} />
+   </Button>
 
    {isPickerOpen === id && (
     <ColorPicker
