@@ -18,6 +18,7 @@ import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
 import DeletedNotes from "./pages/Trash"
+import PinnedNotes from "./pages/PinnedNotes"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -32,6 +33,7 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
+     <Route path="pinned" element={<PinnedNotes />} />
      <Route path="trash" element={<DeletedNotes />} />
     </Route>
 

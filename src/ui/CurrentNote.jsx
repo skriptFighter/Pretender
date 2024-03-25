@@ -50,12 +50,12 @@ function CurrentNote() {
    className="relative flex flex-col justify-between self-center rounded-lg p-4 shadow-sm shadow-zinc-700"
    style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
   >
-   <div className="flex max-h-80 w-full justify-between">
+   <div className="flex w-full justify-center">
     {selectedImage && (
      <img
       src={URL.createObjectURL(selectedImage)}
       alt="Note image"
-      className="rounded-2xl object-contain"
+      className="max-h-[600px] rounded-2xl object-contain"
      />
     )}
 
@@ -63,27 +63,29 @@ function CurrentNote() {
      <img
       src={currentNote.image}
       alt="Note image"
-      className="rounded-2xl object-contain"
+      className="max-h-[600px] rounded-2xl object-contain"
      />
     )}
+   </div>
+
+   <div className="flex justify-between">
+    <TextareaAutosize
+     placeholder="Title"
+     defaultValue={currentNote?.title}
+     maxLength={100}
+     maxRows={2}
+     className="w-full resize-none p-2 text-lg font-semibold focus:border-none focus:outline-none  dark:bg-black dark:text-white"
+     style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
+     {...register("title")}
+    />
 
     <div
-     className="absolute right-2 top-2 flex h-fit cursor-pointer items-center rounded-full p-3 hover:bg-gray-200"
+     className="flex h-fit cursor-pointer items-center rounded-full p-3 hover:bg-gray-200"
      onClick={() => setIsPinned((pin) => !pin)}
     >
      {isPinned ? <TbPinnedFilled fontSize={23} /> : <VscPinned fontSize={23} />}
     </div>
    </div>
-
-   <TextareaAutosize
-    placeholder="Title"
-    defaultValue={currentNote?.title}
-    maxLength={100}
-    maxRows={2}
-    className="w-full resize-none p-2 text-lg font-semibold focus:border-none focus:outline-none  dark:bg-black dark:text-white"
-    style={{ backgroundColor: selectedColor || currentNote?.bgColor }}
-    {...register("title")}
-   />
 
    <TextareaAutosize
     maxLength={800}

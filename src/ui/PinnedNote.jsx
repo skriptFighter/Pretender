@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
-import { selectIsGrid, setCurrentNote, setModal } from "../notesSlice"
+import { useDispatch } from "react-redux"
+import { setCurrentNote, setModal } from "../notesSlice"
 import { useState } from "react"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
@@ -12,15 +12,11 @@ import { MdDeleteOutline } from "react-icons/md"
 
 import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-function Note({ title, content, id, pinned, bgColor, image, deleted }) {
- const [isHover, setIsHover] = useState(false)
+function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
  const [selectedColor, setSelectedColor] = useState(null)
+ const [isHover, setIsHover] = useState(false)
  const dispatch = useDispatch()
-
- const isGrid = useSelector(selectIsGrid)
-
- const imageValid = image && typeof image === "string"
- const imageLoading = image && typeof image === "object"
+ console.log(setSelectedColor)
 
  function handleClick() {
   dispatch(setCurrentNote(id))
@@ -29,64 +25,44 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
 
  return (
   <div
+   className="relative flex h-44 w-1/2 gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
+   onClick={handleClick}
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col rounded-2xl shadow-md transition-shadow duration-300  dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "w-56 self-start" : "w-1/3"} `}
-   style={{
-    border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
-   }}
   >
-   <div onClick={handleClick}>
-    {imageValid && (
-     <div className="cursor-default rounded-t-2xl">
-      <img
-       loading="lazy"
-       src={image}
-       className="max-h-96 w-full rounded-t-2xl object-contain"
-      />
-     </div>
-    )}
-
-    {imageLoading && (
-     <div className="cursor-default rounded-t-2xl">
-      <img
-       loading="lazy"
-       src={URL.createObjectURL(image)}
-       className="max-h-96 w-full rounded-t-2xl object-contain"
-      />
-     </div>
-    )}
-
-    <div
-     className={`${!image && "rounded-t-2xl"} flex cursor-default flex-col gap-2 px-4 pt-8`}
-     style={{ backgroundColor: selectedColor || bgColor }}
-    >
-     <div className="break-words text-lg font-semibold ">{title}</div>
-     <p className="break-words pb-2 ">{content}</p>
-    </div>
+   <div className=" w-1/4">
+    <img
+     loading="lazy"
+     src={image}
+     alt="Note image"
+     className="h-full w-full rounded-md bg-tertiary object-contain"
+    />
    </div>
 
    <div
-    className="rounded-b-2xl "
-    style={{ backgroundColor: selectedColor || bgColor }}
+    className="flex w-3/4 flex-col rounded-md p-4 pr-14 "
+    style={{ backgroundColor: bgColor }}
    >
+    <p className="h-10 break-words text-lg font-semibold">{title}</p>
+    <p className="h-full overflow-hidden break-words text-lg ">{content}</p>
+   </div>
+
+   <div className="absolute bottom-3 right-0">
     <NoteOptions
-     isHover={isHover}
      id={id}
-     image={image}
      pinned={pinned}
-     setSelectedColor={setSelectedColor}
+     setSelectedColor={selectedColor}
      deleted={deleted}
+     isHover={isHover}
     />
    </div>
   </div>
  )
 }
 
-function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
+function NoteOptions({ id, pinned, setSelectedColor, deleted, isHover }) {
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
- const isGrid = useSelector(selectIsGrid)
  const { updateTrash } = useUpdateTrash()
 
  function togglePick(id) {
@@ -96,7 +72,7 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
  return (
   <div className="relative">
    <div
-    className={`${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
+    className={`flex flex-col justify-start  px-4 opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
    >
     <Button
      header={true}
@@ -133,4 +109,4 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
  )
 }
 
-export default Note
+export default PinnedNote

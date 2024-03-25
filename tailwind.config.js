@@ -26,6 +26,9 @@ module.exports = {
 
     tertiary: "#ECF1FE",
     tertiaryDark: "#353535",
+
+    textPrimary: "#191919",
+    textSecondary: "#f3f3f3",
    },
   },
   plugins: [require("tailwindcss-animate")],

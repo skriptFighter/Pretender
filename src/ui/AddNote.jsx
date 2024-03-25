@@ -6,7 +6,7 @@ import { TbPinnedFilled } from "react-icons/tb"
 import { useForm } from "react-hook-form"
 import { useAddNote } from "../hooks/useAddNote"
 import TextareaAutosize from "react-textarea-autosize"
-import { useClickOutside } from "../hooks/useClickOutside"
+// import { useClickOutside } from "../hooks/useClickOutside"
 import toast from "react-hot-toast"
 
 import { FaRegBell } from "react-icons/fa"
@@ -17,14 +17,12 @@ import ColorPicker from "../components/ColorPicker"
 import { useRef, useState } from "react"
 
 function AddNote() {
- const [isActive, setIsActive] = useState(false)
  const [isPinned, setIsPinned] = useState(false)
  const [selectedColor, setSelectedColor] = useState()
 
  const { addNote } = useAddNote()
  const { handleSubmit, register, reset, setValue, watch } = useForm()
 
- const ref = useClickOutside(() => setIsActive(false))
  const selectedImage = watch("image")
 
  function onSubmit(data) {
@@ -35,52 +33,41 @@ function AddNote() {
 
   addNote({ ...data, pinned: isPinned, bgColor: selectedColor })
   reset()
-  setIsActive(false)
   setSelectedColor(null)
   setIsPinned(false)
  }
 
  return (
   <form
-   ref={ref}
    onSubmit={handleSubmit(onSubmit)}
-   className="flex w-1/3 flex-col justify-between self-center rounded-lg p-4 shadow-sm shadow-zinc-700"
-   onClick={() => setIsActive(true)}
+   className="flex flex-col justify-between self-center rounded-lg p-4 shadow-sm shadow-zinc-700"
    style={{ backgroundColor: selectedColor }}
   >
-   {isActive && (
-    <>
-     {selectedImage && (
-      <img
-       src={URL.createObjectURL(selectedImage)}
-       alt="Note image"
-       className="rounded-2xl"
-      />
-     )}
-
-     <div className="flex justify-between">
-      <TextareaAutosize
-       placeholder="Title"
-       maxLength={100}
-       maxRows={2}
-       className="w-full resize-none p-2 text-lg font-semibold focus:border-none focus:outline-none  dark:bg-black dark:text-white"
-       style={{ backgroundColor: selectedColor }}
-       {...register("title")}
-      />
-
-      <div
-       className="flex h-fit cursor-pointer items-center rounded-full p-3 hover:bg-gray-200"
-       onClick={() => setIsPinned((pin) => !pin)}
-      >
-       {isPinned ? (
-        <TbPinnedFilled fontSize={23} />
-       ) : (
-        <VscPinned fontSize={23} />
-       )}
-      </div>
-     </div>
-    </>
+   {selectedImage && (
+    <img
+     src={URL.createObjectURL(selectedImage)}
+     alt="Note image"
+     className="max-h-[600px] rounded-2xl object-contain"
+    />
    )}
+
+   <div className="flex justify-between">
+    <TextareaAutosize
+     placeholder="Title"
+     maxLength={100}
+     maxRows={2}
+     className="w-full resize-none p-2 text-lg font-semibold focus:border-none focus:outline-none dark:bg-black dark:text-white"
+     style={{ backgroundColor: selectedColor }}
+     {...register("title")}
+    />
+
+    <div
+     className="flex h-fit cursor-pointer items-center rounded-full p-3 hover:bg-gray-200"
+     onClick={() => setIsPinned((pin) => !pin)}
+    >
+     {isPinned ? <TbPinnedFilled fontSize={23} /> : <VscPinned fontSize={23} />}
+    </div>
+   </div>
 
    <TextareaAutosize
     maxLength={800}
@@ -91,14 +78,12 @@ function AddNote() {
     {...register("content")}
    />
 
-   {isActive && (
-    <div className="grid grid-cols-2 px-2">
-     <AddNoteOptions setSelectedColor={setSelectedColor} setValue={setValue} />
-     <Button type={"submit"} primary={true}>
-      Save
-     </Button>
-    </div>
-   )}
+   <div className="grid grid-cols-2 px-2">
+    <AddNoteOptions setSelectedColor={setSelectedColor} setValue={setValue} />
+    <Button type={"submit"} primary={true}>
+     Save
+    </Button>
+   </div>
   </form>
  )
 }
