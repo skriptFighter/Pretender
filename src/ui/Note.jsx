@@ -101,23 +101,23 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
       onClick={() => updatePinned({ isPinned: !pinned, id })}
      >
       {pinned ? (
-       <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+       <TbPinnedFilled fontSize={23} cursor={"pointer"} />
       ) : (
-       <VscPinned fontSize={20} cursor={"pointer"} />
+       <VscPinned fontSize={23} cursor={"pointer"} />
       )}
      </Button>
 
      <Button header={true}>
-      <CiImageOn fontSize={20} cursor={"pointer"} />
+      <CiImageOn fontSize={23} cursor={"pointer"} />
      </Button>
 
      <Button header={true} onClick={() => togglePicker(id)}>
-      <LuPaintbrush fontSize={20} cursor={"pointer"} />
+      <LuPaintbrush fontSize={23} cursor={"pointer"} />
      </Button>
     </div>
 
     <Button header={true} onClick={() => updateTrash({ id, deleted })}>
-     <MdDeleteOutline fontSize={20} cursor={"pointer"} />
+     <MdDeleteOutline fontSize={23} cursor={"pointer"} />
     </Button>
 
     {isPickerOpen === id && (
