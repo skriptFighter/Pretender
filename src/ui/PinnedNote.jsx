@@ -28,17 +28,19 @@ function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
   >
-   <div className=" w-1/4" onClick={handleClick}>
-    <img
-     loading="lazy"
-     src={image}
-     alt="Note image"
-     className="h-full w-full rounded-md bg-tertiary object-contain"
-    />
-   </div>
+   {image && (
+    <div className=" w-1/4" onClick={handleClick}>
+     <img
+      loading="lazy"
+      src={image}
+      alt="Note image"
+      className="h-full w-full rounded-md bg-tertiary object-contain"
+     />
+    </div>
+   )}
 
    <div
-    className="flex w-3/4 flex-col rounded-md p-4 pr-14 "
+    className={`flex ${image ? "w-3/4" : "w-full"} flex-col rounded-md p-4 pr-14 `}
     style={{ backgroundColor: selectedColor || bgColor }}
     onClick={handleClick}
    >
