@@ -8,11 +8,15 @@ import Button from "../components/Button"
 import { useAuthUser } from "../hooks/useAuthUser"
 import { useUserInfos } from "../hooks/useUserInfos"
 import { useEditProfile } from "../hooks/useEditProfile"
+import Modal from "../components/Modal"
+import AddNote from "../ui/AddNote"
+import { useSelector } from "react-redux"
+import { selectModal } from "../notesSlice"
 
 function Profile() {
  const { editProfile } = useEditProfile()
-
  const { user } = useUserInfos()
+ const modal = useSelector(selectModal)
 
  const {
   register,
@@ -67,7 +71,7 @@ function Profile() {
        <div className="flex  w-1/2 justify-center ">
         <img
          src={
-          selectedImage
+          selectedImage && selectedImage?.[0]
            ? URL.createObjectURL(selectedImage?.[0])
            : user?.[0]?.image
          }
@@ -138,6 +142,12 @@ function Profile() {
      </div>
     </form>
    </div>
+
+   {modal === "addNote" && (
+    <Modal>
+     <AddNote />
+    </Modal>
+   )}
   </div>
  )
 }

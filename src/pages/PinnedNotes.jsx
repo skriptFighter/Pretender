@@ -11,6 +11,7 @@ import { useNotes } from "../hooks/useNotes"
 import PinnedNote from "../ui/PinnedNote"
 import Modal from "../components/Modal"
 import CurrentNote from "../ui/CurrentNote"
+import AddNote from "../ui/AddNote"
 
 function PinnedNotes() {
  const dispatch = useDispatch()
@@ -28,7 +29,7 @@ function PinnedNotes() {
 
  return (
   <>
-   <div className="flex h-screen w-full flex-col items-center gap-12 pb-6 pl-72 pr-6">
+   <div className="flex w-full flex-col items-center gap-12 pb-6 pl-72 pr-6">
     {searchedNotes
      ?.filter((note) => note?.pinned && !note?.deleted)
      .map((note) => (
@@ -48,6 +49,12 @@ function PinnedNotes() {
    {modal === "currentNote" && (
     <Modal>
      <CurrentNote />
+    </Modal>
+   )}
+
+   {modal === "addNote" && (
+    <Modal>
+     <AddNote />
     </Modal>
    )}
   </>

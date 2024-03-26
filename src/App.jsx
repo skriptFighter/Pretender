@@ -35,9 +35,8 @@ export default function App() {
      <Route index element={<Dashboard />} />
      <Route path="pinned" element={<PinnedNotes />} />
      <Route path="trash" element={<DeletedNotes />} />
+     <Route path="profile" element={<Profile />} />
     </Route>
-
-    <Route path="profile" element={<Profile />} />
 
     <Route element={<AuthLayout />}>
      <Route path="login" element={<Login />} />
