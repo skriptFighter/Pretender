@@ -7,7 +7,13 @@ export function useAddNote() {
 
  const { mutate: addNote } = useMutation({
   mutationFn: addNoteApi,
-  onSuccess: () => {
+  onMutate: async (newNote) => {
+   await queryClient.cancelQueries({ queryKey: ["notes"] })
+   const previousNotes = queryClient.getQueryData(["notes"])
+   queryClient.setQueryData(["notes"], (old) => [...old, newNote])
+   return { previousNotes }
+  },
+  onSettled: () => {
    queryClient.invalidateQueries({ queryKey: ["notes"] })
   },
   onError: (err) => {

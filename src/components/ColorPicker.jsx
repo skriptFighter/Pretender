@@ -1,32 +1,47 @@
-import { CirclePicker } from "react-color"
-import { useForm } from "react-hook-form"
 import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
+import { useClickOutside } from "../hooks/useClickOutside"
 
-function ColorPicker({ setIsPickOpen, id }) {
- const { register, handleSubmit, watch, setValue } = useForm()
+const colors = [
+ { id: 1, color: "#f44336" },
+ { id: 2, color: "#0693e3" },
+ { id: 3, color: "#00d084" },
+ { id: 4, color: "#ffeb3b" },
+ { id: 5, color: "#b279d2" },
+ { id: 6, color: "#ff6900" },
+ { id: 7, color: "#e91e63" },
+]
+
+function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
+ //setSelectedColor is for edit note
+
  const { updateBgColor } = useUpdateBgColor()
- const selectedColor = watch("color")
+ const ref = useClickOutside(() => setIsPickerOpen(null))
 
- const handleColorChange = (color) => {
-  setValue("color", color.hex)
+ function updateWithSelected({ color, id }) {
+  setSelectedColor(color)
+  updateBgColor({ color, id })
  }
 
- const onSubmit = (data) => {
-  setIsPickOpen((isOpen) => !isOpen)
-  updateBgColor({ ...data, id })
+ const handleColorChange = (color) => {
+  setIsPickerOpen(null)
+  setSelectedColor
+   ? updateWithSelected({ color, id })
+   : updateBgColor({ color, id })
  }
 
  return (
-  <div className="w-64 h-10 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 flex items-center gap-3 p-2">
-   <form>
-    <CirclePicker
-     onChange={handleColorChange}
-     color={selectedColor}
-     onChangeComplete={handleSubmit(onSubmit)}
-     colors={["#ff0000", "#0000ff", "#00ff00", "#ffff00", "#800080", "#ffa500"]}
+  <div
+   className="absolute -bottom-10 left-1/2 flex -translate-x-1/2 items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 shadow-md shadow-black "
+   ref={ref}
+  >
+   {colors.map((color) => (
+    <div
+     key={color.id}
+     onClick={() => handleColorChange(color.color)}
+     style={{ backgroundColor: color.color }}
+     className="h-7 w-7 cursor-pointer rounded-full transition-all duration-300 hover:scale-125"
     />
-    <input type="hidden" {...register("color")} />
-   </form>
+   ))}
   </div>
  )
 }

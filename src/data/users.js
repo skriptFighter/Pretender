@@ -86,3 +86,16 @@ export async function editProfile({ user, id, password }) {
 
  return data
 }
+
+export async function deleteProfilePicture(oldImage) {
+ if (oldImage) {
+  const imageName = oldImage.split(
+   "https://oysvpfovjeritgijrphg.supabase.co/storage/v1/object/public/avatars/"
+  )
+
+  const { error: storageError } = await supabase.storage
+   .from("avatars")
+   .remove(imageName[1])
+  if (storageError) throw new Error(storageError.message)
+ }
+}

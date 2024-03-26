@@ -1,21 +1,31 @@
 import { useForm } from "react-hook-form"
-import { useAuthUser } from "../hooks/useAuthUser"
-import { useEditProfile } from "../hooks/useEditProfile"
-import { useUserInfos } from "../hooks/useUserInfos"
-import { useEffect } from "react"
+import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+
+import { useEffect } from "react"
 import Button from "../components/Button"
+
+import { useAuthUser } from "../hooks/useAuthUser"
+import { useUserInfos } from "../hooks/useUserInfos"
+import { useEditProfile } from "../hooks/useEditProfile"
+import Modal from "../components/Modal"
+import AddNote from "../ui/AddNote"
+import { useSelector } from "react-redux"
+import { selectModal } from "../notesSlice"
 
 function Profile() {
  const { editProfile } = useEditProfile()
  const { user } = useUserInfos()
+ const modal = useSelector(selectModal)
 
  const {
   register,
   handleSubmit,
   formState: { errors },
   getValues,
+  watch,
  } = useForm()
+ const selectedImage = watch("image")
 
  const { user: authUser, isAuthenticated, isLoading } = useAuthUser()
  const navigate = useNavigate()
@@ -28,12 +38,19 @@ function Profile() {
  )
 
  function onSubmit(data) {
+  if (selectedImage && selectedImage?.[0]?.type !== "image/jpeg") {
+   toast.error("Please provide a JPEG image")
+   return
+  }
+
   const image =
-   data?.image && data.image.length > 0 ? data.image[0] : user[0].image
+   data.image && data.image.length > 0 ? data.image[0] : user[0].image
   const username = data?.username || user[0].username
   const password = data.newPassword || null
+  const oldImage = user?.[0]?.image
 
   editProfile({
+   oldImage: oldImage,
    user: { username, image },
    password,
    id: authUser.id,
@@ -41,8 +58,8 @@ function Profile() {
  }
 
  return (
-  <div className="w-1/4 mx-auto flex justify-center items-center h-screen">
-   <div className=" bg-zinc-100 py-12 px-8 rounded-lg outline-black shadow-xl">
+  <div className="mx-auto flex h-screen w-1/4 items-center justify-center">
+   <div className=" rounded-lg bg-zinc-100 px-8 py-12 shadow-xl outline-black">
     <form onSubmit={handleSubmit(onSubmit)}>
      <div className="mb-8">
       <h1 className="text-xl font-semibold">Profile</h1>
@@ -51,10 +68,18 @@ function Profile() {
 
      <div className="flex flex-col gap-5 ">
       <div className="flex items-center gap-4">
-       <div className="w-1/4">
-        <img src={user?.[0]?.image} alt="" className="w-full rounded-full" />
+       <div className="flex  w-1/2 justify-center ">
+        <img
+         src={
+          selectedImage && selectedImage?.[0]
+           ? URL.createObjectURL(selectedImage?.[0])
+           : user?.[0]?.image
+         }
+         alt="profile picture"
+         className="h-20 w-20 rounded-full "
+        />
        </div>
-       <input type="file" {...register("image")} />
+       <input type="file" accept="image/jpeg" {...register("image")} />
       </div>
 
       <div className="flex flex-col">
@@ -117,6 +142,12 @@ function Profile() {
      </div>
     </form>
    </div>
+
+   {modal === "addNote" && (
+    <Modal>
+     <AddNote />
+    </Modal>
+   )}
   </div>
  )
 }
