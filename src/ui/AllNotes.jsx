@@ -13,7 +13,7 @@ function AllNotes() {
 
  return (
   <>
-   <div className="flex w-full flex-wrap gap-x-10 gap-y-2 pb-6 pr-6">
+   <div className="flex w-full flex-wrap gap-10 pb-6 pr-6">
     {useMemo(
      function () {
       return notes

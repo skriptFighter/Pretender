@@ -31,45 +31,42 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col rounded-2xl shadow-md transition-shadow duration-300  dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "w-56 self-start" : "w-1/3"} `}
+   className={`flex flex-col justify-between rounded-md shadow-lg transition-shadow duration-300 dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
    style={{
-    border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
+    border: `solid 2px ${selectedColor || bgColor}`,
+    backgroundColor: `${(isGrid && selectedColor) || bgColor}`,
    }}
   >
    <div onClick={handleClick}>
     {imageValid && (
-     <div className="cursor-default rounded-t-2xl">
+     <div className="cursor-default rounded-t-md">
       <img
        loading="lazy"
        src={image}
-       className="max-h-96 w-full rounded-t-2xl object-contain"
+       className="h-48 w-full rounded-t-md object-cover"
       />
      </div>
     )}
 
     {imageLoading && (
-     <div className="cursor-default rounded-t-2xl">
+     <div className="cursor-default rounded-t-md">
       <img
        loading="lazy"
        src={URL.createObjectURL(image)}
-       className="max-h-96 w-full rounded-t-2xl object-contain"
+       className="h-56 w-full rounded-t-md object-cover"
       />
      </div>
     )}
 
     <div
-     className={`${!image && "rounded-t-2xl"} flex cursor-default flex-col gap-2 px-4 pt-8`}
-     style={{ backgroundColor: selectedColor || bgColor }}
+     className={`flex w-full ${image ? "h-36" : "h-[335px]"}  cursor-default flex-col gap-2 overflow-hidden p-4`}
     >
-     <div className="break-words text-lg font-semibold ">{title}</div>
-     <p className="break-words pb-2 ">{content}</p>
+     <div className="break-words text-lg font-semibold">{title}</div>
+     <p className="overflow-hidden break-words">{content}</p>
     </div>
    </div>
 
-   <div
-    className="rounded-b-2xl "
-    style={{ backgroundColor: selectedColor || bgColor }}
-   >
+   <div>
     <NoteOptions
      isHover={isHover}
      id={id}
@@ -98,37 +95,39 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
    <div
     className={`${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
    >
-    <Button
-     header={true}
-     onClick={() => updatePinned({ isPinned: !pinned, id })}
-    >
-     {pinned ? (
-      <TbPinnedFilled fontSize={20} cursor={"pointer"} />
-     ) : (
-      <VscPinned fontSize={20} cursor={"pointer"} />
-     )}
-    </Button>
+    <div className="flex gap-2">
+     <Button
+      header={true}
+      onClick={() => updatePinned({ isPinned: !pinned, id })}
+     >
+      {pinned ? (
+       <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+      ) : (
+       <VscPinned fontSize={20} cursor={"pointer"} />
+      )}
+     </Button>
 
-    <Button header={true}>
-     <CiImageOn fontSize={20} cursor={"pointer"} />
-    </Button>
+     <Button header={true}>
+      <CiImageOn fontSize={20} cursor={"pointer"} />
+     </Button>
 
-    <Button header={true} onClick={() => togglePicker(id)}>
-     <LuPaintbrush fontSize={20} cursor={"pointer"} />
-    </Button>
+     <Button header={true} onClick={() => togglePicker(id)}>
+      <LuPaintbrush fontSize={20} cursor={"pointer"} />
+     </Button>
+    </div>
 
     <Button header={true} onClick={() => updateTrash({ id, deleted })}>
      <MdDeleteOutline fontSize={20} cursor={"pointer"} />
     </Button>
-   </div>
 
-   {isPickerOpen === id && (
-    <ColorPicker
-     setIsPickerOpen={setIsPickerOpen}
-     id={id}
-     setSelectedColor={setSelectedColor}
-    />
-   )}
+    {isPickerOpen === id && (
+     <ColorPicker
+      setIsPickerOpen={setIsPickerOpen}
+      id={id}
+      setSelectedColor={setSelectedColor}
+     />
+    )}
+   </div>
   </div>
  )
 }
