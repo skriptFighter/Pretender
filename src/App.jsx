@@ -17,8 +17,8 @@ import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
 import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
-import ModalNote from "./ui/ModalNote"
 import DeletedNotes from "./pages/Trash"
+import PinnedNotes from "./pages/PinnedNotes"
 
 export default function App() {
  const router = createBrowserRouter(
@@ -33,11 +33,10 @@ export default function App() {
      }
     >
      <Route index element={<Dashboard />} />
-     <Route path="/:id" element={<ModalNote />} />
+     <Route path="pinned" element={<PinnedNotes />} />
      <Route path="trash" element={<DeletedNotes />} />
+     <Route path="profile" element={<Profile />} />
     </Route>
-
-    <Route path="profile" element={<Profile />} />
 
     <Route element={<AuthLayout />}>
      <Route path="login" element={<Login />} />

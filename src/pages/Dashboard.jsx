@@ -5,14 +5,15 @@ import AddNote from "../ui/AddNote"
 import { useDispatch, useSelector } from "react-redux"
 
 import { selectModal, setNotes, setSearchValue } from "../notesSlice"
-import PinnedNotes from "../ui/PinnedNotes"
-import UnpinnedNotes from "../ui/UnpinnedNotes"
-import ModalNote from "../ui/ModalNote"
+
+import CurrentNote from "../ui/CurrentNote"
+import Modal from "../components/Modal"
+import AllNotes from "../ui/AllNotes"
 
 function Dashboard() {
  const { notes, isLoading, error } = useNotes()
  const dispatch = useDispatch()
- const isModal = useSelector(selectModal)
+ const modal = useSelector(selectModal)
 
  useEffect(() => {
   if (notes) {
@@ -25,12 +26,20 @@ function Dashboard() {
  if (error) return <p>error</p>
 
  return (
-  <div className="flex flex-col gap-8 pb-20 w-full mt-36 ml-72">
-   <AddNote />
+  <div className="ml-72 flex w-full flex-col gap-8 pb-20">
+   <AllNotes />
 
-   <PinnedNotes />
-   <UnpinnedNotes />
-   {isModal && <ModalNote />}
+   {modal === "addNote" && (
+    <Modal>
+     <AddNote />
+    </Modal>
+   )}
+
+   {modal === "currentNote" && (
+    <Modal>
+     <CurrentNote />
+    </Modal>
+   )}
   </div>
  )
 }

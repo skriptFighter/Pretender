@@ -15,7 +15,7 @@ function AuthLayout() {
  )
 
  return (
-  <div className=" mx-auto flex justify-center items-center h-screen">
+  <div className=" mx-auto flex h-screen items-center justify-center">
    <Outlet />
   </div>
  )

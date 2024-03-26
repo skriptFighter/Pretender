@@ -20,15 +20,15 @@ function TrashNote({ title, content, id, bgColor, image, deleted }) {
     <img
      loading="lazy"
      src={image}
-     className="w-full object-contain rounded-t-2xl"
+     className="w-full rounded-t-2xl object-contain"
     />
    </div>
 
    <div
-    className={`${!image && "rounded-t-2xl"} px-4 pt-8 flex flex-col gap-2 `}
+    className={`${!image && "rounded-t-2xl"} flex flex-col gap-2 px-4 pt-8 `}
     style={{ backgroundColor: bgColor }}
    >
-    <div className="font-semibold break-words text-lg ">{title}</div>
+    <div className="break-words text-lg font-semibold ">{title}</div>
     <p className="break-words pb-2 ">{content}</p>
    </div>
 

@@ -31,7 +31,7 @@ function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
 
  return (
   <div
-   className="flex items-center justify-between gap-3 px-4 py-2 bg-white shadow-md shadow-black absolute -bottom-10 rounded-xl left-1/2 -translate-x-1/2 "
+   className="absolute -bottom-10 left-1/2 flex -translate-x-1/2 items-center justify-between gap-3 rounded-xl bg-white px-4 py-2 shadow-md shadow-black "
    ref={ref}
   >
    {colors.map((color) => (
@@ -39,7 +39,7 @@ function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
      key={color.id}
      onClick={() => handleColorChange(color.color)}
      style={{ backgroundColor: color.color }}
-     className="w-7 h-7 rounded-full cursor-pointer hover:scale-125 transition-all duration-300"
+     className="h-7 w-7 cursor-pointer rounded-full transition-all duration-300 hover:scale-125"
     />
    ))}
   </div>
