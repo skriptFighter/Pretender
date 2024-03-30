@@ -1,36 +1,43 @@
-import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
+// import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
 import { useClickOutside } from "../hooks/useClickOutside"
+import { useSelector } from "react-redux"
+import { selectDark } from "../notesSlice"
 
 const colors = [
- { id: 1, color: "#ffd8d9", name: "Light Pastel Pink" }, // Pastel Pink
- { id: 2, color: "#fff0f5", name: "Very Light Pastel Pink" }, // Very Light Pastel Pink
- { id: 3, color: "#EDE0E7", name: "Very Light Pastel Pink" }, // Very Light Pastel Pink
- { id: 4, color: "#c2e0f0", name: "Light Pastel Blue" }, // Light Pastel Blue
- { id: 5, color: "#dce7f7", name: "Light Pastel Cornflower Blue" }, // Light Pastel Cornflower Blue
- { id: 6, color: "#dcedc8", name: "Light Pastel Green" }, // Light Pastel Green
- { id: 7, color: "#d9f7be", name: "Light Pastel Mint Green" }, // Light Pastel Mint Green
- { id: 8, color: "#D9E1C1", name: "Light Pastel Mint Green" }, // Light Pastel Mint Green
- { id: 9, color: "#F2EAE0 ", name: "Light Pastel Mint Green" }, // Light Pastel Mint Green
- { id: 10, color: "#F8F4F1 ", name: "Light Pastel Mint Green" }, // Light Pastel Mint Green
+ { id: 1, light: "#ffd8d9", dark: "#0d63f1" },
+ { id: 11, light: "#ffd811", dark: "#0dddf1" },
+ { id: 2, light: "#fff0f5" },
+ { id: 3, light: "#EDE0E7" },
+ { id: 4, light: "#c2e0f0" },
+ { id: 5, light: "#dce7f7" },
+ { id: 6, light: "#dcedc8" },
+ { id: 7, light: "#d9f7be" },
+ { id: 8, light: "#D9E1C1" },
+ { id: 9, light: "#F2EAE0 " },
+ { id: 10, light: "#F8F4F1 " },
 ]
 
 function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
- //setSelectedColor is for edit note
+ //setSelectedColor is for edit note bgColor
 
- const { updateBgColor } = useUpdateBgColor()
+ //  const { updateBgColor } = useUpdateBgColor()
  const ref = useClickOutside(() => setIsPickerOpen(null))
 
- function updateWithSelected({ color, id }) {
-  setSelectedColor(color)
-  updateBgColor({ color, id })
+ //add ,id here =====================================↓
+ function updateWithSelected({ color: { light, dark } }) {
+  setSelectedColor({ light, dark })
+  // updateBgColor({ color, id })
  }
 
- const handleColorChange = (color) => {
+ function handleColorChange({ color }) {
   setIsPickerOpen(null)
-  setSelectedColor
-   ? updateWithSelected({ color, id })
-   : updateBgColor({ color, id })
+  updateWithSelected({ color, id })
+  // setSelectedColor
+  //  ? updateWithSelected({ color, id })
+  //  : updateBgColor({ color, id })
  }
+
+ const isDark = useSelector(selectDark)
 
  return (
   <div
@@ -40,8 +47,8 @@ function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
    {colors.map((color) => (
     <div
      key={color.id}
-     onClick={() => handleColorChange(color.color)}
-     style={{ backgroundColor: color.color }}
+     onClick={() => handleColorChange({ color })}
+     style={{ backgroundColor: isDark ? color.dark : color.light }}
      className="h-7 w-7 cursor-pointer rounded-full transition-all duration-300 hover:scale-125"
     />
    ))}

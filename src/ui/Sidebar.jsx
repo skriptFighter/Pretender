@@ -9,22 +9,21 @@ import { useUserInfos } from "../hooks/useUserInfos"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { MdOutlineWbSunny } from "react-icons/md"
 import { CiLogout } from "react-icons/ci"
-import { useDispatch } from "react-redux"
-import { setModal } from "../notesSlice"
-import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { selectDark, setDark, setModal } from "../notesSlice"
 
 function Sidebar() {
  const { user } = useUserInfos()
  const profilePicture = user?.[0]?.image
  const userName = user?.[0]?.username
  const dispatch = useDispatch()
+ const isDark = useSelector(selectDark)
 
  const root = document.getElementsByTagName("html")[0]
- const [isDark, setIsDark] = useState(false)
 
  function dark() {
   root.classList.toggle("dark")
-  setIsDark(!isDark)
+  dispatch(setDark(!isDark))
  }
 
  return (

@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { selectIsGrid, setCurrentNote, setModal } from "../notesSlice"
+import {
+ selectDark,
+ selectIsGrid,
+ setCurrentNote,
+ setModal,
+} from "../notesSlice"
 import { useState } from "react"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
@@ -17,6 +22,7 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
  const [selectedColor, setSelectedColor] = useState(null)
  const dispatch = useDispatch()
 
+ const isDark = useSelector(selectDark)
  const isGrid = useSelector(selectIsGrid)
 
  const imageValid = image && typeof image === "string"
@@ -33,8 +39,8 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
    onMouseLeave={() => setIsHover(false)}
    className={`flex flex-col justify-between rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
    style={{
-    border: `solid 1px ${selectedColor || bgColor}`,
-    backgroundColor: `${(isGrid && selectedColor) || bgColor}`,
+    border: `solid 1px ${isDark ? selectedColor?.dark : selectedColor?.light || bgColor}`,
+    backgroundColor: `${isDark ? selectedColor?.dark : selectedColor?.light || bgColor}`,
    }}
   >
    <div onClick={handleClick}>
