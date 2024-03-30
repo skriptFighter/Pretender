@@ -31,15 +31,15 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col justify-between rounded-md shadow-lg transition-shadow duration-300 dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
+   className={`flex flex-col justify-between rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
    style={{
-    border: `solid 2px ${selectedColor || bgColor}`,
+    border: `solid 1px ${selectedColor || bgColor}`,
     backgroundColor: `${(isGrid && selectedColor) || bgColor}`,
    }}
   >
    <div onClick={handleClick}>
     {imageValid && (
-     <div className="cursor-default rounded-t-md">
+     <div className="cursor-default">
       <img
        loading="lazy"
        src={image}
@@ -49,7 +49,7 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
     )}
 
     {imageLoading && (
-     <div className="cursor-default rounded-t-md">
+     <div className="cursor-default ">
       <img
        loading="lazy"
        src={URL.createObjectURL(image)}
