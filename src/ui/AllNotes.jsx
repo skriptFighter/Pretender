@@ -17,7 +17,7 @@ function AllNotes() {
     {useMemo(
      function () {
       return notes
-       .filter((note) => !note.deleted && !note.pinned)
+       .filter((note) => !note.deleted)
        .map((note) => (
         <Note
          title={note?.title}
