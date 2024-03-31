@@ -4,17 +4,16 @@ import { useSelector } from "react-redux"
 import { selectDark } from "../notesSlice"
 
 const colors = [
- { id: 1, light: "#ffd8d9", dark: "#0d63f1" },
- { id: 11, light: "#ffd811", dark: "#0dddf1" },
- { id: 2, light: "#fff0f5" },
- { id: 3, light: "#EDE0E7" },
- { id: 4, light: "#c2e0f0" },
- { id: 5, light: "#dce7f7" },
- { id: 6, light: "#dcedc8" },
- { id: 7, light: "#d9f7be" },
- { id: 8, light: "#D9E1C1" },
- { id: 9, light: "#F2EAE0 " },
- { id: 10, light: "#F8F4F1 " },
+ { id: 1, light: "#ffd8d9", dark: "#cbadae" },
+ { id: 2, light: "#fff0f5", dark: "#c9b6bb" },
+ { id: 3, light: "#EDE0E7", dark: "#baabb2" },
+ { id: 4, light: "#c2e0f0", dark: "#9cb4c0" },
+ { id: 5, light: "#dce7f7", dark: "#bbc5d2" },
+ { id: 6, light: "#dcedc8", dark: "#97a28b" },
+ { id: 7, light: "#d9f7be", dark: "#a8ba93" },
+ { id: 8, light: "#D9E1C1", dark: "#aab195" },
+ { id: 9, light: "#ece1d4 ", dark: "#b5a999" },
+ { id: 10, light: "#F8F4F1 ", dark: "#a4a29d" },
 ]
 
 function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
