@@ -1,4 +1,4 @@
-// import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
+import { useUpdateBgColor } from "../hooks/useUpdateBgColor"
 import { useClickOutside } from "../hooks/useClickOutside"
 import { useSelector } from "react-redux"
 import { selectDark } from "../notesSlice"
@@ -17,26 +17,24 @@ const colors = [
 ]
 
 function ColorPicker({ id, setIsPickerOpen, setSelectedColor }) {
- //setSelectedColor is for edit note bgColor
+ //  setSelectedColor is for edit note bgColor
 
- //  const { updateBgColor } = useUpdateBgColor()
+ const isDark = useSelector(selectDark)
+
+ const { updateBgColor } = useUpdateBgColor()
  const ref = useClickOutside(() => setIsPickerOpen(null))
 
- //add ,id here =====================================↓
- function updateWithSelected({ color: { light, dark } }) {
+ function updateWithSelected({ color: { light, dark }, id }) {
   setSelectedColor({ light, dark })
-  // updateBgColor({ color, id })
+  updateBgColor({ light, dark, id })
  }
 
  function handleColorChange({ color }) {
   setIsPickerOpen(null)
-  updateWithSelected({ color, id })
-  // setSelectedColor
-  //  ? updateWithSelected({ color, id })
-  //  : updateBgColor({ color, id })
+  setSelectedColor
+   ? updateWithSelected({ color, id })
+   : updateBgColor({ color, id })
  }
-
- const isDark = useSelector(selectDark)
 
  return (
   <div

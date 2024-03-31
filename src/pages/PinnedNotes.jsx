@@ -40,6 +40,7 @@ function PinnedNotes() {
        id={note?.id}
        pinned={note?.pinned}
        bgColor={note?.bgColor}
+       bgColorDark={note?.bgColorDark}
        image={note?.image}
        deleted={note?.deleted}
       />

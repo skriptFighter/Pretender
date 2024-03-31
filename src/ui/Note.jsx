@@ -17,7 +17,16 @@ import { MdDeleteOutline } from "react-icons/md"
 
 import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-function Note({ title, content, id, pinned, bgColor, image, deleted }) {
+function Note({
+ title,
+ content,
+ id,
+ pinned,
+ bgColor,
+ bgColorDark,
+ image,
+ deleted,
+}) {
  const [isHover, setIsHover] = useState(false)
  const [selectedColor, setSelectedColor] = useState(null)
  const dispatch = useDispatch()
@@ -37,10 +46,9 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col justify-between rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
+   className={`flex flex-col justify-between rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-slate-600 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
    style={{
-    border: `solid 1px ${isDark ? selectedColor?.dark : selectedColor?.light || bgColor}`,
-    backgroundColor: `${isDark ? selectedColor?.dark : selectedColor?.light || bgColor}`,
+    backgroundColor: `${isDark ? selectedColor?.dark || bgColorDark : selectedColor?.light || bgColor}`,
    }}
   >
    <div onClick={handleClick}>
@@ -80,13 +88,21 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
      pinned={pinned}
      setSelectedColor={setSelectedColor}
      deleted={deleted}
+     isDark={isDark}
     />
    </div>
   </div>
  )
 }
 
-function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
+function NoteOptions({
+ isHover,
+ id,
+ pinned,
+ setSelectedColor,
+ deleted,
+ isDark,
+}) {
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
  const isGrid = useSelector(selectIsGrid)
@@ -99,7 +115,7 @@ function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
  return (
   <div className="relative">
    <div
-    className={`${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
+    className={`${isDark && "text-tertiaryDark "} ${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
    >
     <div className="flex gap-2">
      <Button
