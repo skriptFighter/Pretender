@@ -4,7 +4,7 @@ import { FaRegBell } from "react-icons/fa"
 
 import { TbPinnedFilled } from "react-icons/tb"
 
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useUserInfos } from "../hooks/useUserInfos"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { MdOutlineWbSunny } from "react-icons/md"
@@ -18,6 +18,7 @@ function Sidebar() {
  const userName = user?.[0]?.username
  const dispatch = useDispatch()
  const isDark = useSelector(selectDark)
+ const { pathname } = useLocation()
 
  const root = document.getElementsByTagName("html")[0]
 
@@ -84,7 +85,8 @@ function Sidebar() {
       )
      }
      label={isDark ? "Light" : "Dark"}
-     onClick={() => dark()}
+     onClick={dark}
+     to={pathname}
     />
     <Item icon={<CiLogout fontSize={28} />} label={"Logout"} />
    </div>
