@@ -126,3 +126,8 @@ export async function updateNote(note) {
   return data
  }
 }
+
+export async function deleteAllNotes() {
+ const { error } = await supabase.from("notes").delete().eq("deleted", true)
+ if (error) throw new Error(error.message)
+}
