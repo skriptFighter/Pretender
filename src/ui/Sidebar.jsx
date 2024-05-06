@@ -1,6 +1,7 @@
 import { FaRegStickyNote } from "react-icons/fa"
 import { MdDeleteOutline } from "react-icons/md"
 import { FaRegBell } from "react-icons/fa"
+import { MdNoteAdd } from "react-icons/md"
 
 import { TbPinnedFilled } from "react-icons/tb"
 
@@ -19,6 +20,7 @@ function Sidebar() {
  const dispatch = useDispatch()
  const isDark = useSelector(selectDark)
  const { pathname } = useLocation()
+ const windowWidth = window.innerWidth
 
  const root = document.getElementsByTagName("html")[0]
 
@@ -28,41 +30,36 @@ function Sidebar() {
  }
 
  return (
-  <div className="fixed top-10 flex h-full min-w-64 flex-col justify-between pb-10">
+  <div className="fixed top-10 flex h-full  flex-col justify-between pb-10 sm:min-w-10 md:min-w-40 lg:min-w-64">
    <div className="  flex  flex-col gap-4">
     <div className="flex flex-col">
-     <Link
-      to="/profile"
-      className="flex items-center gap-4 rounded-r-md px-4 py-2 hover:bg-tertiary hover:dark:bg-tertiaryDark"
-     >
-      <img
-       src={profilePicture}
-       loading="lazy"
-       alt="profile picture"
-       className="h-12 w-12 rounded-md object-fill object-center"
-      />
-
-      <p className="text-lg font-semibold">{userName}</p>
-     </Link>
-
-     <div
-      className="cursor-pointer rounded-r-md bg-secondary px-4 py-2 text-center font-semibold hover:bg-tertiary dark:bg-tertiaryDark"
-      onClick={() => dispatch(setModal("addNote"))}
-     >
-      Add Note
-     </div>
-    </div>
-
-    <div>
      <Item
-      icon={<FaRegStickyNote fontSize={23} />}
-      label={"Notes"}
-      className={"py-0"}
+      icon={
+       <img
+        src={profilePicture}
+        loading="lazy"
+        alt="profile picture"
+        className="h-12 w-12 rounded-md object-fill object-center"
+       />
+      }
+      label={userName}
+      style={{ paddingTop: "0.6rem", paddingBottom: "0.6rem" }}
      />
 
      <Item
+      icon={windowWidth <= 500 && <MdNoteAdd fontSize={25} />}
+      label={windowWidth > 500 && "Add Note"}
+      onClick={() => dispatch(setModal("addNote"))}
+      className={"justify-center bg-secondary dark:bg-secondaryDark"}
+     />
+    </div>
+
+    <div>
+     <Item icon={<FaRegStickyNote fontSize={23} />} label={"Notes"} />
+
+     <Item
       to={"/pinned"}
-      icon={<TbPinnedFilled fontSize={23} />}
+      icon={<TbPinnedFilled fontSize={25} />}
       label={"Pinned"}
      />
 
@@ -94,15 +91,19 @@ function Sidebar() {
  )
 }
 
-function Item({ icon, label, to, className, onClick }) {
+function Item({ icon, label, to, style, className, onClick }) {
+ const windowWidth = window.innerWidth
+
  return (
   <Link
    to={to}
-   className={`flex items-center gap-4 rounded-r-md px-4 py-5 hover:bg-tertiary hover:dark:bg-tertiaryDark ${className}`}
+   className={`flex w-full items-center gap-4 rounded-r-md p-5 hover:bg-tertiary hover:dark:bg-tertiaryDark sm:w-full ${className} ${windowWidth <= 500 && "justify-center"}`}
    onClick={onClick}
+   style={style}
   >
    {icon}
-   <p className="text-md font-semibold">{label}</p>
+
+   {windowWidth > 500 && <p className="text-md font-semibold ">{label}</p>}
   </Link>
  )
 }

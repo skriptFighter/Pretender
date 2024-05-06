@@ -14,7 +14,7 @@ function Trash() {
  const { deleteAllNotes } = useDeleteAllNotes()
 
  return (
-  <div className="ml-72 flex h-screen w-full flex-col gap-20">
+  <div className="ml-24 flex w-full flex-col gap-20 sm:ml-72">
    <Button
     onClick={deleteAllNotes}
     primary={true}

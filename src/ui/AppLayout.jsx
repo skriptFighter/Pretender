@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar"
 
 function AppLayout() {
  return (
-  <main className="mx-auto flex gap-10 overflow-x-hidden bg-primary pt-10 text-textPrimary dark:bg-primaryDark dark:text-textSecondary ">
+  <main className="mx-auto flex h-screen gap-10 overflow-x-hidden bg-primary pt-10 text-textPrimary dark:bg-primaryDark dark:text-textSecondary ">
    <Sidebar />
    <Outlet />
   </main>
