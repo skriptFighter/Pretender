@@ -34,7 +34,7 @@ function PinnedNote({
 
  return (
   <div
-   className="relative flex h-44 w-1/2 gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
+   className="relative flex h-44 w-full max-w-[900px] gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
   >

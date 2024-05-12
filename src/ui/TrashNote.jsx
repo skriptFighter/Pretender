@@ -21,7 +21,7 @@ function TrashNote({
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col justify-between overflow-hidden rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-slate-600 ${isGrid ? "h-96 w-96 self-start" : "w-1/3"} `}
+   className={`flex flex-col justify-between overflow-hidden rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-slate-600 ${isGrid ? "h-64 w-48 self-start phoneSm:h-96 phoneSm:w-64 phoneLg:h-96 phoneLg:w-96" : "w-1/3"} `}
    style={{
     backgroundColor: `${isDark ? bgColorDark : bgColor}`,
    }}

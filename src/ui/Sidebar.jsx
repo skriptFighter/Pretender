@@ -30,7 +30,7 @@ function Sidebar() {
  }
 
  return (
-  <div className="fixed top-10 flex h-full  flex-col justify-between pb-10 sm:min-w-10 md:min-w-40 lg:min-w-64">
+  <div className=" fixed top-10 flex h-full flex-col justify-between pb-10 sm:min-w-10 md:min-w-40 lg:min-w-64">
    <div className="  flex  flex-col gap-4">
     <div className="flex flex-col">
      <Item
@@ -44,11 +44,12 @@ function Sidebar() {
       }
       label={userName}
       style={{ paddingTop: "0.6rem", paddingBottom: "0.6rem" }}
+      to={"/profile"}
      />
 
      <Item
-      icon={windowWidth <= 500 && <MdNoteAdd fontSize={25} />}
-      label={windowWidth > 500 && "Add Note"}
+      icon={windowWidth <= 640 && <MdNoteAdd fontSize={25} />}
+      label={windowWidth > 640 && "Add Note"}
       onClick={() => dispatch(setModal("addNote"))}
       className={"justify-center bg-secondary dark:bg-secondaryDark"}
      />
@@ -97,13 +98,13 @@ function Item({ icon, label, to, style, className, onClick }) {
  return (
   <Link
    to={to}
-   className={`flex w-full items-center gap-4 rounded-r-md p-5 hover:bg-tertiary hover:dark:bg-tertiaryDark sm:w-full ${className} ${windowWidth <= 500 && "justify-center"}`}
+   className={` flex w-full items-center gap-4 rounded-r-md p-5 hover:bg-tertiary hover:dark:bg-tertiaryDark sm:w-full ${className} ${windowWidth <= 640 && "justify-center"}`}
    onClick={onClick}
    style={style}
   >
    {icon}
 
-   {windowWidth > 500 && <p className="text-md font-semibold ">{label}</p>}
+   {windowWidth > 640 && <p className="text-md font-semibold ">{label}</p>}
   </Link>
  )
 }

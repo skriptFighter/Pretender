@@ -14,14 +14,12 @@ function Trash() {
  const { deleteAllNotes } = useDeleteAllNotes()
 
  return (
-  <div className="ml-24 flex w-full flex-col gap-20 sm:ml-72">
-   <Button
-    onClick={deleteAllNotes}
-    primary={true}
-    className={`w-fit self-center`}
-   >
-    Delete all
-   </Button>
+  <div className="ml-24 flex w-full flex-col  sm:ml-72">
+   <div className="flex justify-start py-4 phoneSm:justify-center">
+    <Button onClick={deleteAllNotes} primary={true} className="w-40">
+     Delete all
+    </Button>
+   </div>
 
    <div
     className={` flex w-full pb-6 pr-6 ${isGrid ? "flex-wrap gap-x-10 gap-y-8 " : " flex-col items-center gap-12"}`}
