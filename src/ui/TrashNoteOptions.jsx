@@ -18,7 +18,7 @@ function TrashNoteOptions({ isHover, id, image, deleted }) {
    className={`${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
   >
    <Button header={true} onClick={() => deleteNote({ id, image })}>
-    <MdDeleteOutline fontSize={25} cursor={"pointer"} />
+    <MdDeleteOutline fontSize={20} cursor={"pointer"} />
    </Button>
 
    <Button header={true} onClick={() => updateTrash({ id, deleted })}>

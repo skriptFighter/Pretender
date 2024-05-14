@@ -80,11 +80,12 @@ export async function updatePinned(isPinned, id) {
  if (error) throw new Error(error.message)
 }
 
-export async function updateBgColor(light, dark, id) {
+export async function updateBgColor(color, id) {
  const { data, error } = await supabase
   .from("notes")
-  .update({ bgColor: light, bgColorDark: dark })
+  .update({ bgColor: color })
   .eq("id", id)
+
  if (error) throw new Error(error.message)
  return data
 }
@@ -125,9 +126,4 @@ export async function updateNote(note) {
   if (error) throw new Error(error.message)
   return data
  }
-}
-
-export async function deleteAllNotes() {
- const { error } = await supabase.from("notes").delete().eq("deleted", true)
- if (error) throw new Error(error.message)
 }
