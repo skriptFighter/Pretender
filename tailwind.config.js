@@ -30,6 +30,10 @@ module.exports = {
     textPrimary: "#191919",
     textSecondary: "#f3f3f3",
    },
+   screens: {
+    phoneSm: "370px",
+    phoneLg: "500px",
+   },
   },
   plugins: [require("tailwindcss-animate")],
  },

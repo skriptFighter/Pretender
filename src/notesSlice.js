@@ -6,6 +6,7 @@ const initialState = {
  search: [],
  isGrid: true,
  modal: "",
+ isDark: false,
 }
 
 export const notesSlice = createSlice({
@@ -44,16 +45,26 @@ export const notesSlice = createSlice({
   setModal: (state, action) => {
    state.modal = action.payload
   },
+  setDark: (state, action) => {
+   state.isDark = action.payload
+  },
  },
 })
 
-export const { setNotes, setCurrentNote, setSearchValue, setGrid, setModal } =
- notesSlice.actions
+export const {
+ setNotes,
+ setCurrentNote,
+ setSearchValue,
+ setGrid,
+ setModal,
+ setDark,
+} = notesSlice.actions
 
 export const selectNotes = (state) => state.notes.notes
 export const selectCurrentNote = (state) => state.notes.currentNote
 export const selectSearch = (state) => state.notes.search
 export const selectIsGrid = (state) => state.notes.isGrid
 export const selectModal = (state) => state.notes.modal
+export const selectDark = (state) => state.notes.isDark
 
 export default notesSlice.reducer

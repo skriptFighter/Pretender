@@ -14,12 +14,13 @@ import { LuPaintbrush } from "react-icons/lu"
 
 import ColorPicker from "../components/ColorPicker"
 import { useRef, useState } from "react"
-import { setModal } from "../notesSlice"
-import { useDispatch } from "react-redux"
+import { selectDark, setModal } from "../notesSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 function AddNote() {
  const [isPinned, setIsPinned] = useState(false)
  const [selectedColor, setSelectedColor] = useState()
+ const isDark = useSelector(selectDark)
 
  const dispatch = useDispatch()
 
@@ -34,7 +35,12 @@ function AddNote() {
    return
   }
 
-  addNote({ ...data, pinned: isPinned, bgColor: selectedColor })
+  addNote({
+   ...data,
+   pinned: isPinned,
+   bgColor: selectedColor?.light,
+   bgColorDark: selectedColor?.dark,
+  })
   reset()
   setSelectedColor(null)
   setIsPinned(false)
@@ -44,8 +50,10 @@ function AddNote() {
  return (
   <form
    onSubmit={handleSubmit(onSubmit)}
-   className="flex flex-col justify-between self-center rounded-lg p-4 shadow-sm shadow-zinc-700"
-   style={{ backgroundColor: selectedColor }}
+   className="flex flex-col justify-between self-center rounded-lg p-4 shadow-sm shadow-zinc-700 dark:bg-primaryDark dark:text-primary"
+   style={{
+    backgroundColor: `${isDark ? selectedColor?.dark : selectedColor?.light}`,
+   }}
   >
    {selectedImage && (
     <img
@@ -60,8 +68,10 @@ function AddNote() {
      placeholder="Title"
      maxLength={100}
      maxRows={2}
-     className="w-full resize-none p-2 text-lg font-semibold focus:border-none focus:outline-none dark:bg-black dark:text-white"
-     style={{ backgroundColor: selectedColor }}
+     className={`w-full resize-none p-2 text-lg font-semibold  focus:border-none focus:outline-none dark:bg-primaryDark dark:text-primary ${isDark && "placeholder:text-primary"}`}
+     style={{
+      backgroundColor: `${isDark ? selectedColor?.dark : selectedColor?.light}`,
+     }}
      {...register("title")}
     />
 
@@ -77,8 +87,10 @@ function AddNote() {
     maxLength={800}
     maxRows={10}
     placeholder={"Take a note..."}
-    className="w-full resize-none p-2 focus:border-none focus:outline-none dark:bg-black dark:text-white"
-    style={{ backgroundColor: selectedColor }}
+    className={`w-full resize-none p-2 focus:border-none focus:outline-none dark:bg-primaryDark dark:text-primary ${isDark && "placeholder:text-primary"}`}
+    style={{
+     backgroundColor: `${isDark ? selectedColor?.dark : selectedColor?.light}`,
+    }}
     {...register("content")}
    />
 

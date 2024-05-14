@@ -29,7 +29,7 @@ function PinnedNotes() {
 
  return (
   <>
-   <div className="flex w-full flex-col items-center gap-12 pb-6 pl-72 pr-6">
+   <div className="ml-24 flex w-full flex-col items-center gap-12 pb-6 pr-6 sm:ml-48 lg:ml-72">
     {searchedNotes
      ?.filter((note) => note?.pinned && !note?.deleted)
      .map((note) => (
@@ -40,6 +40,7 @@ function PinnedNotes() {
        id={note?.id}
        pinned={note?.pinned}
        bgColor={note?.bgColor}
+       bgColorDark={note?.bgColorDark}
        image={note?.image}
        deleted={note?.deleted}
       />

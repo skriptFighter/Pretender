@@ -7,8 +7,8 @@ export function useUpdateBgColor() {
 
  const { mutate: updateBgColor } = useMutation({
   mutationFn: (data) => {
-   const { color, id } = data
-   updateBgColorApi(color, id)
+   const { light, dark, id } = data
+   updateBgColorApi(light, dark, id)
   },
   onSuccess: () => {
    queryClient.invalidateQueries(["notes"])
