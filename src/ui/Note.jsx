@@ -31,7 +31,7 @@ function Note({ title, content, id, pinned, bgColor, image, deleted }) {
   <div
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
-   className={`flex flex-col rounded-2xl shadow-md transition-shadow duration-300  dark:shadow-sm dark:shadow-slate-800 ${isGrid ? "w-56 self-start" : "w-1/3"} `}
+   className={`flex flex-col justify-between overflow-hidden rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-slate-600 ${isGrid ? "h-64 w-48 self-start phoneSm:h-96 phoneSm:w-64 phoneLg:h-96 phoneLg:w-96 " : "w-1/3"} `}
    style={{
     border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
    }}
