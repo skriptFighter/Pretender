@@ -1,10 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import {
- selectDark,
- selectIsGrid,
- setCurrentNote,
- setModal,
-} from "../notesSlice"
+import { selectIsGrid, setCurrentNote, setModal } from "../notesSlice"
 import { useState } from "react"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
@@ -17,21 +12,11 @@ import { MdDeleteOutline } from "react-icons/md"
 
 import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-function Note({
- title,
- content,
- id,
- pinned,
- bgColor,
- bgColorDark,
- image,
- deleted,
-}) {
+function Note({ title, content, id, pinned, bgColor, image, deleted }) {
  const [isHover, setIsHover] = useState(false)
  const [selectedColor, setSelectedColor] = useState(null)
  const dispatch = useDispatch()
 
- const isDark = useSelector(selectDark)
  const isGrid = useSelector(selectIsGrid)
 
  const imageValid = image && typeof image === "string"
@@ -48,39 +33,43 @@ function Note({
    onMouseLeave={() => setIsHover(false)}
    className={`flex flex-col justify-between overflow-hidden rounded-md shadow-md shadow-gray-400 transition-shadow duration-300 dark:shadow-slate-600 ${isGrid ? "h-64 w-48 self-start phoneSm:h-96 phoneSm:w-64 phoneLg:h-96 phoneLg:w-96 " : "w-1/3"} `}
    style={{
-    backgroundColor: `${isDark ? selectedColor?.dark || bgColorDark : selectedColor?.light || bgColor}`,
+    border: `solid ${isGrid ? "1px" : "2px"} ${selectedColor || bgColor}`,
    }}
   >
    <div onClick={handleClick}>
     {imageValid && (
-     <div className="cursor-default">
+     <div className="cursor-default rounded-t-2xl">
       <img
        loading="lazy"
        src={image}
-       className="h-48 w-full rounded-t-md object-cover"
+       className="max-h-96 w-full rounded-t-2xl object-contain"
       />
      </div>
     )}
 
     {imageLoading && (
-     <div className="cursor-default ">
+     <div className="cursor-default rounded-t-2xl">
       <img
        loading="lazy"
        src={URL.createObjectURL(image)}
-       className="h-56 w-full rounded-t-md object-cover"
+       className="max-h-96 w-full rounded-t-2xl object-contain"
       />
      </div>
     )}
 
     <div
-     className={`flex w-full ${image ? "h-36" : "h-[335px]"}  cursor-default flex-col gap-2 overflow-hidden p-4`}
+     className={`${!image && "rounded-t-2xl"} flex cursor-default flex-col gap-2 px-4 pt-8`}
+     style={{ backgroundColor: selectedColor || bgColor }}
     >
-     <div className="break-words text-lg font-semibold">{title}</div>
-     <p className="overflow-hidden break-words">{content}</p>
+     <div className="break-words text-lg font-semibold ">{title}</div>
+     <p className="break-words pb-2 ">{content}</p>
     </div>
    </div>
 
-   <div>
+   <div
+    className="rounded-b-2xl "
+    style={{ backgroundColor: selectedColor || bgColor }}
+   >
     <NoteOptions
      isHover={isHover}
      id={id}
@@ -88,21 +77,13 @@ function Note({
      pinned={pinned}
      setSelectedColor={setSelectedColor}
      deleted={deleted}
-     isDark={isDark}
     />
    </div>
   </div>
  )
 }
 
-function NoteOptions({
- isHover,
- id,
- pinned,
- setSelectedColor,
- deleted,
- isDark,
-}) {
+function NoteOptions({ isHover, id, pinned, setSelectedColor, deleted }) {
  const { updatePinned } = useUpdatePinned()
  const [isPickerOpen, setIsPickerOpen] = useState(null)
  const isGrid = useSelector(selectIsGrid)
@@ -115,41 +96,39 @@ function NoteOptions({
  return (
   <div className="relative">
    <div
-    className={`${isDark && "text-tertiaryDark "} ${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
+    className={`${isGrid ? "items-center justify-between px-2" : "justify-start gap-8 px-4"} flex opacity-0 transition-all duration-300 ${isHover && "opacity-100"}`}
    >
-    <div className="flex gap-2">
-     <Button
-      header={true}
-      onClick={() => updatePinned({ isPinned: !pinned, id })}
-     >
-      {pinned ? (
-       <TbPinnedFilled fontSize={23} cursor={"pointer"} />
-      ) : (
-       <VscPinned fontSize={23} cursor={"pointer"} />
-      )}
-     </Button>
-
-     <Button header={true}>
-      <CiImageOn fontSize={23} cursor={"pointer"} />
-     </Button>
-
-     <Button header={true} onClick={() => togglePicker(id)}>
-      <LuPaintbrush fontSize={23} cursor={"pointer"} />
-     </Button>
-    </div>
-
-    <Button header={true} onClick={() => updateTrash({ id, deleted })}>
-     <MdDeleteOutline fontSize={23} cursor={"pointer"} />
+    <Button
+     header={true}
+     onClick={() => updatePinned({ isPinned: !pinned, id })}
+    >
+     {pinned ? (
+      <TbPinnedFilled fontSize={20} cursor={"pointer"} />
+     ) : (
+      <VscPinned fontSize={20} cursor={"pointer"} />
+     )}
     </Button>
 
-    {isPickerOpen === id && (
-     <ColorPicker
-      setIsPickerOpen={setIsPickerOpen}
-      id={id}
-      setSelectedColor={setSelectedColor}
-     />
-    )}
+    <Button header={true}>
+     <CiImageOn fontSize={20} cursor={"pointer"} />
+    </Button>
+
+    <Button header={true} onClick={() => togglePicker(id)}>
+     <LuPaintbrush fontSize={20} cursor={"pointer"} />
+    </Button>
+
+    <Button header={true} onClick={() => updateTrash({ id, deleted })}>
+     <MdDeleteOutline fontSize={20} cursor={"pointer"} />
+    </Button>
    </div>
+
+   {isPickerOpen === id && (
+    <ColorPicker
+     setIsPickerOpen={setIsPickerOpen}
+     id={id}
+     setSelectedColor={setSelectedColor}
+    />
+   )}
   </div>
  )
 }
