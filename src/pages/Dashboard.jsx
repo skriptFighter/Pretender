@@ -26,7 +26,7 @@ function Dashboard() {
  if (error) return <p>error</p>
 
  return (
-  <div className="ml-72 flex w-full flex-col gap-8 pb-20">
+  <div className="ml-24 flex w-full flex-col gap-8 pb-20 sm:ml-48 lg:ml-72">
    <AllNotes />
 
    {modal === "addNote" && (

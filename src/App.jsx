@@ -15,7 +15,6 @@ import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
 import Toast from "./ui/Toast"
 import AuthLayout from "./ui/AuthLayout"
-import Dark from "./ui/Dark"
 import Profile from "./pages/Profile"
 import DeletedNotes from "./pages/Trash"
 import PinnedNotes from "./pages/PinnedNotes"
@@ -59,7 +58,6 @@ export default function App() {
    <ReactQueryDevtools initialIsOpen={false} />
    <RouterProvider router={router} />
    <Toast />
-   <Dark />
   </QueryClientProvider>
  )
 }
