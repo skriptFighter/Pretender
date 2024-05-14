@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
-import { selectDark, setCurrentNote, setModal } from "../notesSlice"
+import { useDispatch } from "react-redux"
+import { setCurrentNote, setModal } from "../notesSlice"
 import { useState } from "react"
 import { useUpdatePinned } from "../hooks/useUpdatePinned"
 import ColorPicker from "../components/ColorPicker"
@@ -12,18 +12,8 @@ import { MdDeleteOutline } from "react-icons/md"
 
 import { useUpdateTrash } from "../hooks/useUpdateTrash"
 
-function PinnedNote({
- title,
- content,
- id,
- pinned,
- bgColor,
- image,
- deleted,
- bgColorDark,
-}) {
+function PinnedNote({ title, content, id, pinned, bgColor, image, deleted }) {
  const [selectedColor, setSelectedColor] = useState(null)
- const isDark = useSelector(selectDark)
  const [isHover, setIsHover] = useState(false)
  const dispatch = useDispatch()
 
@@ -34,7 +24,7 @@ function PinnedNote({
 
  return (
   <div
-   className="relative flex h-44 w-full max-w-[900px] gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
+   className="relative flex h-44 w-1/2 gap-2  rounded-md border-2 border-tertiary bg-primary p-2"
    onMouseEnter={() => setIsHover(true)}
    onMouseLeave={() => setIsHover(false)}
   >
@@ -51,9 +41,7 @@ function PinnedNote({
 
    <div
     className={`flex ${image ? "w-3/4" : "w-full"} flex-col rounded-md p-4 pr-14 `}
-    style={{
-     backgroundColor: `${isDark ? selectedColor?.dark || bgColorDark : selectedColor?.light || bgColor}`,
-    }}
+    style={{ backgroundColor: selectedColor || bgColor }}
     onClick={handleClick}
    >
     <p className="h-10 break-words text-lg font-semibold">{title}</p>
