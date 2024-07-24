@@ -15,7 +15,7 @@ export async function logout() {
  if (error) throw new Error(error.message)
 }
 
-export async function signUp({ email, password }) {
+export async function signUp({ email, password, username }) {
  const { data: authUser, error: authError } = await supabase.auth.signUp({
   email,
   password,
@@ -29,14 +29,14 @@ export async function signUp({ email, password }) {
 
  const { data, error } = await supabase
   .from("users")
-  .insert([{ auth_id: authUser.user.id }])
+  .insert([{ username, email, auth_id: authUser.user.id }])
   .select()
  if (error) throw new Error(error.message)
 
  return data
 }
 
-export async function getCurrentUser() {
+export async function getAuthUser() {
  const {
   data: { user },
  } = await supabase.auth.getUser()
@@ -47,28 +47,55 @@ export async function getCurrentUser() {
  return user
 }
 
-export async function editProfile({ user, id }) {
- console.log(user)
+export async function getUserInfos() {
+ const authUser = await getAuthUser()
+
+ let { data: users, error } = await supabase
+  .from("users")
+  .select("username,email,image")
+  .eq("auth_id", authUser.id)
+
+ if (error) throw new Error("could not load user infos ")
+
+ return users
+}
+
+export async function editProfile({ user, id, password }) {
  const hasImagePath = user.image?.startsWith?.(supabaseUrl)
- const imageName = `${Math.random()}-${user.avatar.name}`.replaceAll("/", "")
+ const imageName = `${Math.random()}-${user.image.name}`.replaceAll("/", "")
  const imagePath = hasImagePath
-  ? user.avatar
+  ? user.image
   : `${supabaseUrl}/storage/v1/object/public/avatars/${imageName}`
 
- let query = supabase.from("users")
+ const { error: passwordError } = await supabase.auth.updateUser({
+  password: password,
+ })
 
- if (id) query = query.update({ ...user, avatar: imagePath }).eq("auth_id", id)
+ let query = supabase.from("users")
+ if (id) query = query.update({ ...user, image: imagePath }).eq("auth_id", id)
 
  const { data, error } = await query.select().single()
 
- if (error) {
-  console.error(error)
-  throw new Error("user could not be created")
+ if (error || passwordError) {
+  throw new Error("user could not be edited")
  }
 
  if (hasImagePath) return data
 
- await supabase.storage.from("avatars").upload(imageName, user.avatar)
+ await supabase.storage.from("avatars").upload(imageName, user.image)
 
  return data
+}
+
+export async function deleteProfilePicture(oldImage) {
+ if (oldImage) {
+  const imageName = oldImage.split(
+   "https://oysvpfovjeritgijrphg.supabase.co/storage/v1/object/public/avatars/"
+  )
+
+  const { error: storageError } = await supabase.storage
+   .from("avatars")
+   .remove(imageName[1])
+  if (storageError) throw new Error(storageError.message)
+ }
 }

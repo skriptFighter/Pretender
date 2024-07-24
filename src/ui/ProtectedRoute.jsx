@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
-import { useUser } from "../hooks/useUser"
+import { useAuthUser } from "../hooks/useAuthUser"
 
 function ProtectedRoute({ children }) {
  const navigate = useNavigate()
- const { isLoading, isAuthenticated } = useUser()
+ const { isLoading, isAuthenticated } = useAuthUser()
 
  useEffect(
   function () {

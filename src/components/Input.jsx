@@ -1,9 +1,17 @@
-function Input({ htmlForId, placeholder, label, type, register, error }) {
+function Input({
+ htmlForId,
+ placeholder,
+ label,
+ type,
+ register,
+ error,
+ defaultValue,
+}) {
  return (
-  <div className="flex flex-col gap-2 px-2 w-full">
+  <div className="flex w-full flex-col gap-2 px-2">
    <label
     htmlFor={htmlForId}
-    className="capitalize font-semibold text-sm md:text-md"
+    className="md:text-md text-sm font-semibold capitalize"
    >
     {label}
    </label>
@@ -11,12 +19,13 @@ function Input({ htmlForId, placeholder, label, type, register, error }) {
    <input
     type={type}
     id={htmlForId}
+    defaultValue={defaultValue}
     placeholder={placeholder}
     {...register}
-    className="text-sm sm:text-md bg-white dark:bg-zinc-900  dark:text-stone-300 text-black border-gray-300 focus:outline-none focus:ring focus:border-gray-900 rounded p-2"
+    className="sm:text-md rounded border-gray-300 bg-white  p-2 text-sm text-black focus:border-gray-900 focus:outline-none focus:ring dark:bg-zinc-900 dark:text-stone-300"
    />
 
-   <p className="text-sm sm:text-md  text-red-400 dark:text-red-500 font-semibold">
+   <p className="sm:text-md text-sm  font-semibold text-red-400 dark:text-red-500">
     {error && error}
    </p>
   </div>
