@@ -33,6 +33,7 @@ function Login() {
    <div className="flex flex-col gap-5">
     <Input
      type={"text"}
+     defaultValue={"adelboudjema099@gmail.com"}
      htmlForId={"email"}
      label={"email"}
      placeholder={"me@example.com"}
@@ -46,6 +47,7 @@ function Login() {
 
     <Input
      type={"password"}
+     defaultValue={"123456"}
      htmlForId={"password"}
      label={"password"}
      placeholder={"Enter your password"}

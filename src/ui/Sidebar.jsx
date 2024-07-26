@@ -12,9 +12,12 @@ import { MdOutlineWbSunny } from "react-icons/md"
 import { CiLogout } from "react-icons/ci"
 import { useDispatch, useSelector } from "react-redux"
 import { selectDark, setDark, setModal } from "../notesSlice"
+import { useLogout } from "../hooks/useLogout"
 
 function Sidebar() {
  const { user } = useUserInfos()
+ const { logout } = useLogout()
+
  const profilePicture = user?.[0]?.image
  const userName = user?.[0]?.username
  const dispatch = useDispatch()
@@ -86,7 +89,7 @@ function Sidebar() {
      onClick={dark}
      to={pathname}
     />
-    <Item icon={<CiLogout fontSize={28} />} label={"Logout"} />
+    <Item onClick={logout} icon={<CiLogout fontSize={28} />} label={"Logout"} />
    </div>
   </div>
  )
